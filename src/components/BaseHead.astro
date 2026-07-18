@@ -32,7 +32,9 @@ const { title, description, image = FallbackImage } = Astro.props;
 />
 <meta name="generator" content={Astro.generator} />
 
-<Font cssVariable="--font-atkinson" preload />
+<Font cssVariable="--font-display" preload />
+<Font cssVariable="--font-body" preload />
+<Font cssVariable="--font-mono" />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

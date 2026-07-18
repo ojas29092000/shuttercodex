@@ -6,30 +6,29 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://shuttercodex.com',
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
-			provider: fontProviders.local(),
-			name: 'Atkinson',
-			cssVariable: '--font-atkinson',
-			fallbacks: ['sans-serif'],
-			options: {
-				variants: [
-					{
-						src: ['./src/assets/fonts/atkinson-regular.woff'],
-						weight: 400,
-						style: 'normal',
-						display: 'swap',
-					},
-					{
-						src: ['./src/assets/fonts/atkinson-bold.woff'],
-						weight: 700,
-						style: 'normal',
-						display: 'swap',
-					},
-				],
-			},
+			provider: fontProviders.google(),
+			name: 'Fraunces',
+			cssVariable: '--font-display',
+			fallbacks: ['Georgia', 'serif'],
+			weights: [700],
+		},
+		{
+			provider: fontProviders.google(),
+			name: 'Inter',
+			cssVariable: '--font-body',
+			fallbacks: ['system-ui', 'sans-serif'],
+			weights: [400, 500, 600],
+		},
+		{
+			provider: fontProviders.google(),
+			name: 'JetBrains Mono',
+			cssVariable: '--font-mono',
+			fallbacks: ['monospace'],
+			weights: [400],
 		},
 	],
 });

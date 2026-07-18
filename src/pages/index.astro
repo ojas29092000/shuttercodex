@@ -11,97 +11,205 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
 			.hero {
-				text-align: center;
-				padding: 4em 1em 3em;
 				max-width: 680px;
 				margin: 0 auto;
+				padding: 5rem 1.5rem 4rem;
 			}
+
+			.eyebrow {
+				font-family: var(--font-mono);
+				font-size: 0.7rem;
+				font-weight: 400;
+				text-transform: uppercase;
+				letter-spacing: 0.18em;
+				color: var(--accent-warm);
+				margin: 0 0 1.25rem;
+				display: block;
+			}
+
 			.hero h1 {
-				font-size: 2.5em;
-				line-height: 1.2;
-				margin-bottom: 0.5em;
+				font-family: var(--font-display);
+				font-weight: 700;
+				font-size: clamp(2.4rem, 5vw, 3.6rem);
+				line-height: 1.1;
+				letter-spacing: -0.02em;
+				color: var(--ink);
+				margin: 0 0 1.25rem;
 			}
-			.tagline {
-				font-size: 1.15em;
-				color: rgb(var(--gray-dark));
-				margin-bottom: 1.5em;
-				line-height: 1.6;
+
+			.hero-sub {
+				font-family: var(--font-body);
+				font-size: 1.0625rem;
+				line-height: 1.75;
+				color: var(--ink-muted);
+				margin: 0 0 2rem;
+				max-width: 520px;
 			}
+
 			.cta {
-				display: inline-block;
-				padding: 0.6em 1.4em;
+				display: inline-flex;
+				align-items: center;
+				gap: 0.4rem;
 				background: var(--accent);
-				color: white;
+				color: #fff;
+				font-family: var(--font-body);
+				font-size: 0.875rem;
+				font-weight: 600;
+				letter-spacing: 0.02em;
+				text-decoration: none;
+				padding: 0.65rem 1.4rem;
 				border-radius: 4px;
-				text-decoration: none;
-				font-weight: 600;
+				transition: background 0.15s, transform 0.1s;
 			}
+
 			.cta:hover {
-				opacity: 0.9;
+				background: #1a43a8;
+				color: #fff;
+				transform: translateY(-1px);
 			}
+
+			.divider {
+				max-width: 1080px;
+				margin: 0 auto;
+				padding: 0 1.5rem;
+				border: none;
+				border-top: 1px solid var(--border);
+			}
+
 			.pillars {
+				max-width: 1080px;
+				margin: 0 auto;
+				padding: 3rem 1.5rem 4rem;
 				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-				gap: 1.5rem;
-				max-width: 960px;
-				margin: 3em auto;
-				padding: 0 1em;
+				grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+				gap: 1.25rem;
 			}
+
 			.pillar {
-				padding: 1.5em;
-				border: 1px solid rgb(var(--gray-light));
-				border-radius: 8px;
-			}
-			.pillar h3 {
-				margin: 0 0 0.5em;
-				font-size: 1.05em;
-			}
-			.pillar p {
-				margin: 0 0 1em;
-				font-size: 0.9em;
-				color: rgb(var(--gray-dark));
-				line-height: 1.5;
-			}
-			.pillar a {
-				font-size: 0.9em;
-				font-weight: 600;
-				color: var(--accent);
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: 6px;
+				padding: 1.75rem;
 				text-decoration: none;
+				display: block;
+				position: relative;
+				transition: border-color 0.18s, box-shadow 0.18s;
+			}
+
+			/* AF bracket corners — the signature element */
+			.pillar::before,
+			.pillar::after {
+				content: '';
+				position: absolute;
+				width: 12px;
+				height: 12px;
+				opacity: 0;
+				transition: opacity 0.18s ease;
+				pointer-events: none;
+			}
+
+			.pillar::before {
+				top: 6px;
+				left: 6px;
+				border-top: 1.5px solid var(--accent);
+				border-left: 1.5px solid var(--accent);
+			}
+
+			.pillar::after {
+				bottom: 6px;
+				right: 6px;
+				border-bottom: 1.5px solid var(--accent);
+				border-right: 1.5px solid var(--accent);
+			}
+
+			.pillar:hover {
+				border-color: var(--accent);
+				box-shadow: 0 4px 20px rgba(33, 81, 204, 0.08);
+			}
+
+			.pillar:hover::before,
+			.pillar:hover::after {
+				opacity: 1;
+			}
+
+			.pillar-tag {
+				font-family: var(--font-mono);
+				font-size: 0.65rem;
+				font-weight: 400;
+				text-transform: uppercase;
+				letter-spacing: 0.14em;
+				color: var(--accent-warm);
+				margin: 0 0 0.875rem;
+				display: block;
+			}
+
+			.pillar h3 {
+				font-family: var(--font-display);
+				font-size: 1.2rem;
+				font-weight: 700;
+				color: var(--ink);
+				margin: 0 0 0.625rem;
+				line-height: 1.2;
+			}
+
+			.pillar p {
+				font-family: var(--font-body);
+				font-size: 0.9rem;
+				line-height: 1.6;
+				color: var(--ink-muted);
+				margin: 0;
+			}
+
+			@media (max-width: 600px) {
+				.hero {
+					padding: 3rem 1.25rem 2.5rem;
+				}
+
+				.pillars {
+					grid-template-columns: 1fr;
+					padding: 2rem 1.25rem 3rem;
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
-		<main>
+		<main style="width: 100%; max-width: 100%; padding: 0;">
 			<section class="hero">
-				<h1>The technical reference for camera buyers</h1>
-				<p class="tagline">
-					Written by a software engineer specializing in embedded camera systems and AI vision technology.
-					We explain <em>why</em> cameras perform the way they do — not just what the specs say.
+				<span class="eyebrow">Technical Camera Analysis</span>
+				<h1>Camera technology explained by someone who builds it.</h1>
+				<p class="hero-sub">
+					Engineering analysis of cameras, sensors, and computational photography —
+					written by a software engineer who works on embedded camera systems and AI
+					vision platforms. Understand why cameras perform the way they do, not just
+					what the spec sheet says.
 				</p>
 				<a href="/articles" class="cta">Browse Articles →</a>
 			</section>
+
+			<hr class="divider" />
+
 			<section class="pillars">
-				<div class="pillar">
-					<h3>Camera Technology</h3>
-					<p>ISP pipelines, sensor physics, autofocus systems — the engineering behind the image.</p>
-					<a href="/articles">Read →</a>
-				</div>
-				<div class="pillar">
-					<h3>Smartphone Cameras</h3>
-					<p>Computational photography decoded. What makes a great camera phone and why.</p>
-					<a href="/articles">Read →</a>
-				</div>
-				<div class="pillar">
+				<a href="/articles" class="pillar">
+					<span class="pillar-tag">ISP · Sensor · Autofocus</span>
+					<h3>Camera Technology Explainers</h3>
+					<p>The engineering behind the image. ISP pipelines, sensor physics, and autofocus systems decoded.</p>
+				</a>
+				<a href="/articles" class="pillar">
+					<span class="pillar-tag">Computational Photography</span>
+					<h3>Smartphone Camera Analysis</h3>
+					<p>What separates a great camera phone from the rest — and why the hardware alone doesn't explain it.</p>
+				</a>
+				<a href="/articles" class="pillar">
+					<span class="pillar-tag">Mirrorless · Full Frame · APS-C</span>
 					<h3>Mirrorless Buying Guides</h3>
-					<p>Technical buying intelligence for mirrorless cameras. Cut through the marketing.</p>
-					<a href="/articles">Read →</a>
-				</div>
-				<div class="pillar">
+					<p>Technical buying intelligence. Cut through the marketing and understand what you're actually paying for.</p>
+				</a>
+				<a href="/articles" class="pillar">
+					<span class="pillar-tag">Head-to-Head · Sensor Science</span>
 					<h3>Camera Comparisons</h3>
-					<p>Head-to-head analysis grounded in sensor technology and image processing.</p>
-					<a href="/articles">Read →</a>
-				</div>
+					<p>Side-by-side analysis grounded in sensor technology and image processing, not photographer impressions.</p>
+				</a>
 			</section>
 		</main>
 		<Footer />

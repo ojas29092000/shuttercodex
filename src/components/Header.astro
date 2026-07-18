@@ -1,56 +1,71 @@
 ---
-import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
+		<a href="/" class="wordmark">ShutterCodex</a>
+		<div class="nav-links">
 			<HeaderLink href="/articles">Articles</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
 		</div>
 	</nav>
 </header>
+
 <style>
 	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
+		position: sticky;
+		top: 0;
+		background: var(--surface);
+		border-bottom: 1px solid var(--border);
+		z-index: 100;
 	}
 
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
-	}
 	nav {
+		max-width: 1080px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		height: 56px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
+
+	.wordmark {
+		font-family: var(--font-display);
+		font-weight: 700;
+		font-size: 1.2rem;
+		color: var(--accent);
 		text-decoration: none;
+		letter-spacing: -0.01em;
 	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
+
+	.wordmark:hover {
+		color: var(--ink);
 	}
-	.social-links,
-	.social-links a {
+
+	.nav-links {
 		display: flex;
+		gap: 2rem;
+		align-items: center;
 	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
+
+	.nav-links :global(a) {
+		font-family: var(--font-body);
+		font-size: 0.8125rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--ink-muted);
+		text-decoration: none;
+		padding-bottom: 2px;
+		border-bottom: 2px solid transparent;
+		transition: color 0.15s, border-color 0.15s;
+	}
+
+	.nav-links :global(a:hover),
+	.nav-links :global(a.active) {
+		color: var(--ink);
+		border-bottom-color: var(--accent);
 	}
 </style>
