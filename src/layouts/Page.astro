@@ -1,0 +1,44 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={`${title} | ShutterCodex`} description={description} />
+		<style>
+			main {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: 2em auto;
+				padding: 0 1em;
+				color: rgb(var(--gray-dark));
+			}
+			h1 {
+				margin-bottom: 0.25em;
+			}
+			.divider {
+				border: none;
+				border-top: 1px solid rgb(var(--gray-light));
+				margin: 1em 0 2em;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>{title}</h1>
+			<hr class="divider" />
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>
