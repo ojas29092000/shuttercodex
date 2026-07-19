@@ -1,36 +1,85 @@
 ---
+import ApertureMark from './ApertureMark.astro';
 const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} ShutterCodex. All rights reserved.
-	<div class="footer-links">
-		<a href="/about">About</a>
-		<a href="/articles">Articles</a>
-		<a href="/affiliate-disclosure">Affiliate Disclosure</a>
-		<a href="/privacy-policy">Privacy Policy</a>
+	<div class="footer-inner">
+		<a href="/" class="footer-brand"><ApertureMark size={16} /> ShutterCodex</a>
+		<p class="footer-tag">Engineering analysis of cameras, sensors, and computational photography.</p>
+		<div class="footer-links">
+			<a href="/about">About</a>
+			<a href="/articles">Articles</a>
+			<a href="/affiliate-disclosure">Affiliate Disclosure</a>
+			<a href="/privacy-policy">Privacy Policy</a>
+		</div>
+		<p class="footer-meta">&copy; {today.getFullYear()} ShutterCodex&ensp;&#183;&ensp;shot on silicon</p>
 	</div>
 </footer>
+
 <style>
 	footer {
-		padding: 2em 1em 4em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
+		background: var(--surface);
+		border-top: 1px solid var(--border);
+		margin-top: 4rem;
+	}
+
+	.footer-inner {
+		max-width: 1080px;
+		margin: 0 auto;
+		padding: 2.75rem 1.5rem 3rem;
 		text-align: center;
 	}
+
+	.footer-brand {
+		font-family: var(--font-display);
+		font-weight: 700;
+		font-size: 1.05rem;
+		color: var(--accent);
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
+	.footer-brand:hover {
+		color: var(--ink);
+	}
+
+	.footer-tag {
+		font-family: var(--font-body);
+		font-size: 0.8125rem;
+		color: var(--ink-muted);
+		margin: 0.6rem 0 1.4rem;
+	}
+
 	.footer-links {
 		display: flex;
 		justify-content: center;
-		gap: 1.5em;
-		margin-top: 0.75em;
+		gap: 1.75em;
 		flex-wrap: wrap;
 	}
+
 	.footer-links a {
+		font-family: var(--font-body);
+		font-size: 0.78rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--ink-muted);
 		text-decoration: none;
-		color: rgb(var(--gray));
-		font-size: 0.875em;
 	}
+
 	.footer-links a:hover {
-		color: rgb(var(--gray-dark));
+		color: var(--accent);
+	}
+
+	.footer-meta {
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		letter-spacing: 0.06em;
+		color: var(--ink-muted);
+		opacity: 0.7;
+		margin: 1.6rem 0 0;
 	}
 </style>

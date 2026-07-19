@@ -10,10 +10,94 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
+			/* ===== Hero: inside the camera ===== */
+			.hero-band {
+				background: var(--ink);
+				position: relative;
+				overflow: hidden;
+			}
+
+			/* Focusing-screen etched grid */
+			.hero-band::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background-image:
+					linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+				background-size: 44px 44px;
+				-webkit-mask-image: radial-gradient(ellipse 75% 70% at center, black 30%, transparent 80%);
+				mask-image: radial-gradient(ellipse 75% 70% at center, black 30%, transparent 80%);
+				pointer-events: none;
+			}
+
+			/* Lens vignette */
+			.hero-band::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
+				pointer-events: none;
+			}
+
+			/* Oversized ambient aperture, half-cropped off the right edge */
+			.hero-aperture {
+				position: absolute;
+				top: 50%;
+				right: -150px;
+				width: 520px;
+				height: 520px;
+				margin-top: -260px;
+				color: rgba(91, 140, 255, 0.13);
+				pointer-events: none;
+				z-index: 1;
+			}
+
 			.hero {
 				max-width: 680px;
 				margin: 0 auto;
-				padding: 5rem 1.5rem 4rem;
+				padding: 5.5rem 1.5rem 4.5rem;
+				position: relative;
+				z-index: 2;
+			}
+
+			/* Viewfinder corner brackets */
+			.vf {
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				pointer-events: none;
+			}
+
+			.vf-tl { top: 2.2rem; left: 1.5rem; border-top: 2px solid #5B8CFF; border-left: 2px solid #5B8CFF; }
+			.vf-tr { top: 2.2rem; right: 1.5rem; border-top: 2px solid #5B8CFF; border-right: 2px solid #5B8CFF; }
+			.vf-bl { bottom: 1.6rem; left: 1.5rem; border-bottom: 2px solid #5B8CFF; border-left: 2px solid #5B8CFF; }
+			.vf-br { bottom: 1.6rem; right: 1.5rem; border-bottom: 2px solid #5B8CFF; border-right: 2px solid #5B8CFF; }
+
+			/* Exposure-readout HUD */
+			.hero-hud {
+				display: flex;
+				align-items: center;
+				gap: 0.6rem;
+				margin-top: 3rem;
+				font-family: var(--font-mono);
+				font-size: 0.65rem;
+				letter-spacing: 0.14em;
+				color: rgba(255, 255, 255, 0.5);
+			}
+
+			.hud-dot {
+				width: 7px;
+				height: 7px;
+				border-radius: 50%;
+				background: var(--accent-warm);
+				flex: none;
+				animation: hud-pulse 2.4s ease-in-out infinite;
+			}
+
+			@keyframes hud-pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.25; }
 			}
 
 			.eyebrow {
@@ -30,18 +114,23 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			.hero h1 {
 				font-family: var(--font-display);
 				font-weight: 700;
-				font-size: clamp(2.4rem, 5vw, 3.6rem);
+				font-size: clamp(2.4rem, 5vw, 3.7rem);
 				line-height: 1.1;
 				letter-spacing: -0.02em;
-				color: var(--ink);
+				color: #ffffff;
 				margin: 0 0 1.25rem;
+			}
+
+			.hero h1 em {
+				font-style: italic;
+				color: #5B8CFF;
 			}
 
 			.hero-sub {
 				font-family: var(--font-body);
 				font-size: 1.0625rem;
 				line-height: 1.75;
-				color: var(--ink-muted);
+				color: rgba(255, 255, 255, 0.66);
 				margin: 0 0 2rem;
 				max-width: 520px;
 			}
@@ -63,17 +152,35 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			}
 
 			.cta:hover {
-				background: #1a43a8;
+				background: #3565E8;
 				color: #fff;
 				transform: translateY(-1px);
 			}
 
-			.divider {
+			/* Film-strip perforation divider */
+			.film-divider {
 				max-width: 1080px;
 				margin: 0 auto;
 				padding: 0 1.5rem;
-				border: none;
-				border-top: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+
+			.film-divider::before,
+			.film-divider::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--border);
+			}
+
+			.perf {
+				width: 10px;
+				height: 14px;
+				border: 1.5px solid var(--border);
+				border-radius: 3px;
+				flex: none;
 			}
 
 			.pillars {
@@ -93,7 +200,13 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				text-decoration: none;
 				display: block;
 				position: relative;
-				transition: border-color 0.18s, box-shadow 0.18s;
+				transition: border-color 0.18s, box-shadow 0.18s, opacity 0.3s ease, filter 0.3s ease;
+			}
+
+			/* Depth of field: focusing on one card softly defocuses the rest */
+			.pillars:has(.pillar:hover) .pillar:not(:hover) {
+				opacity: 0.55;
+				filter: blur(1px);
 			}
 
 			/* AF bracket corners — the signature element */
@@ -165,6 +278,21 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					padding: 3rem 1.25rem 2.5rem;
 				}
 
+				.vf {
+					width: 16px;
+					height: 16px;
+				}
+
+				.vf-tl, .vf-tr { top: 1rem; }
+				.vf-bl, .vf-br { bottom: 0.9rem; }
+				.vf-tl, .vf-bl { left: 0.75rem; }
+				.vf-tr, .vf-br { right: 0.75rem; }
+
+				.hero-hud {
+					margin-top: 2.25rem;
+					font-size: 0.58rem;
+				}
+
 				.pillars {
 					grid-template-columns: 1fr;
 					padding: 2rem 1.25rem 3rem;
@@ -175,19 +303,46 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<body>
 		<Header />
 		<main style="width: 100%; max-width: 100%; padding: 0;">
-			<section class="hero">
-				<span class="eyebrow">Technical Camera Analysis</span>
-				<h1>Camera technology explained by someone who builds it.</h1>
-				<p class="hero-sub">
-					Engineering analysis of cameras, sensors, and computational photography —
-					written by a software engineer who works on embedded camera systems and AI
-					vision platforms. Understand why cameras perform the way they do, not just
-					what the spec sheet says.
-				</p>
-				<a href="/articles" class="cta">Browse Articles →</a>
+			<section class="hero-band">
+				<svg class="hero-aperture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<circle cx="12" cy="12" r="10"></circle>
+					<line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
+					<line x1="9.69" y1="8" x2="21.17" y2="8"></line>
+					<line x1="7.38" y1="12" x2="13.12" y2="2.06"></line>
+					<line x1="9.69" y1="16" x2="3.95" y2="6.06"></line>
+					<line x1="14.31" y1="16" x2="2.83" y2="16"></line>
+					<line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
+				</svg>
+				<div class="hero">
+					<span class="vf vf-tl" aria-hidden="true"></span>
+					<span class="vf vf-tr" aria-hidden="true"></span>
+					<span class="vf vf-bl" aria-hidden="true"></span>
+					<span class="vf vf-br" aria-hidden="true"></span>
+					<span class="eyebrow">Technical Camera Analysis</span>
+					<h1>Camera technology explained by someone who <em>builds it</em>.</h1>
+					<p class="hero-sub">
+						Engineering analysis of cameras, sensors, and computational photography —
+						written by a software engineer who works on embedded camera systems and AI
+						vision platforms. Understand why cameras perform the way they do, not just
+						what the spec sheet says.
+					</p>
+					<a href="/articles" class="cta">Browse Articles →</a>
+					<div class="hero-hud" aria-hidden="true">
+						<span class="hud-dot"></span>
+						<span>AF LOCK&ensp;&#183;&ensp;f/2.8&ensp;&#183;&ensp;1/250&ensp;&#183;&ensp;ISO 100&ensp;&#183;&ensp;RAW</span>
+					</div>
+				</div>
 			</section>
 
-			<hr class="divider" />
+			<div class="film-divider" role="separator" aria-hidden="true">
+				<span class="perf"></span>
+				<span class="perf"></span>
+				<span class="perf"></span>
+				<span class="perf"></span>
+				<span class="perf"></span>
+				<span class="perf"></span>
+				<span class="perf"></span>
+			</div>
 
 			<section class="pillars">
 				<a href="/articles" class="pillar">
@@ -213,5 +368,64 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			</section>
 		</main>
 		<Footer />
+		<script>
+			import { gsap } from 'gsap';
+			import { ScrollTrigger } from 'gsap/ScrollTrigger';
+			gsap.registerPlugin(ScrollTrigger);
+
+			// GSAP sets inline styles, so the CSS prefers-reduced-motion rule can't stop it — guard in JS
+			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (!reduceMotion) {
+				gsap.from(['.eyebrow', '.hero h1', '.hero-sub', '.cta', '.hero-hud'], {
+					opacity: 0,
+					y: 18,
+					duration: 0.65,
+					stagger: 0.11,
+					ease: 'power2.out',
+					delay: 0.1
+				});
+
+				// Aperture opens on load…
+				gsap.from('.hero-aperture', {
+					opacity: 0,
+					scale: 0.88,
+					duration: 1.1,
+					ease: 'power2.out',
+					transformOrigin: '50% 50%'
+				});
+
+				// …then the iris ring turns slowly as the page scrolls away
+				gsap.to('.hero-aperture', {
+					rotation: 45,
+					ease: 'none',
+					scrollTrigger: {
+						trigger: '.hero-band',
+						start: 'top top',
+						end: 'bottom top',
+						scrub: true
+					}
+				});
+
+				// Viewfinder brackets snap inward like an AF box acquiring focus
+				gsap.from('.vf-tl', { x: -10, y: -10, opacity: 0, duration: 0.55, ease: 'power2.out', delay: 0.25 });
+				gsap.from('.vf-tr', { x: 10, y: -10, opacity: 0, duration: 0.55, ease: 'power2.out', delay: 0.25 });
+				gsap.from('.vf-bl', { x: -10, y: 10, opacity: 0, duration: 0.55, ease: 'power2.out', delay: 0.25 });
+				gsap.from('.vf-br', { x: 10, y: 10, opacity: 0, duration: 0.55, ease: 'power2.out', delay: 0.25 });
+
+				ScrollTrigger.batch('.pillar', {
+					onEnter: (elements) => {
+						gsap.from(elements, {
+							opacity: 0,
+							y: 28,
+							duration: 0.55,
+							stagger: 0.09,
+							ease: 'power2.out'
+						});
+					},
+					once: true,
+					start: 'top 88%'
+				});
+			}
+		</script>
 	</body>
 </html>

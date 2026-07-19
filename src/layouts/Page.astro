@@ -6,39 +6,192 @@ import Header from '../components/Header.astro';
 interface Props {
 	title: string;
 	description: string;
+	eyebrow?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, eyebrow = 'ShutterCodex' } = Astro.props;
 ---
 
 <html lang="en">
 	<head>
 		<BaseHead title={`${title} | ShutterCodex`} description={description} />
 		<style>
-			main {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: 2em auto;
-				padding: 0 1em;
-				color: rgb(var(--gray-dark));
+			/* ===== Dark title band ===== */
+			.page-band {
+				background: var(--ink);
+				position: relative;
+				overflow: hidden;
 			}
-			h1 {
-				margin-bottom: 0.25em;
+
+			.page-band::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background-image:
+					linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+				background-size: 44px 44px;
+				-webkit-mask-image: radial-gradient(ellipse 75% 80% at center, black 30%, transparent 82%);
+				mask-image: radial-gradient(ellipse 75% 80% at center, black 30%, transparent 82%);
+				pointer-events: none;
 			}
-			.divider {
-				border: none;
-				border-top: 1px solid rgb(var(--gray-light));
-				margin: 1em 0 2em;
+
+			.page-band::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.35) 100%);
+				pointer-events: none;
+			}
+
+			.page-header {
+				max-width: 68ch;
+				margin: 0 auto;
+				padding: 3rem 1.5rem 2rem;
+				position: relative;
+				z-index: 2;
+			}
+
+			.page-eyebrow {
+				font-family: var(--font-mono);
+				font-size: 0.65rem;
+				font-weight: 400;
+				text-transform: uppercase;
+				letter-spacing: 0.18em;
+				color: var(--accent-warm);
+				display: block;
+				margin-bottom: 0.75rem;
+			}
+
+			.page-header h1 {
+				font-family: var(--font-display);
+				font-size: clamp(1.8rem, 3vw, 2.4rem);
+				font-weight: 700;
+				color: #ffffff;
+				margin: 0;
+				letter-spacing: -0.02em;
+			}
+
+			.film-edge {
+				display: flex;
+				justify-content: center;
+				gap: 18px;
+				padding: 0 1.5rem 1.25rem;
+				position: relative;
+				z-index: 2;
+				overflow: hidden;
+			}
+
+			.film-edge .perf {
+				width: 10px;
+				height: 14px;
+				border: 1.5px solid rgba(255, 255, 255, 0.22);
+				border-radius: 3px;
+				flex: none;
+			}
+
+			/* ===== Content ===== */
+			.page-content {
+				max-width: 68ch;
+				margin: 0 auto;
+				padding: 2.5rem 1.5rem 4rem;
+			}
+
+			.page-content :global(p) {
+				font-size: 1.0625rem;
+				line-height: 1.8;
+				color: var(--ink);
+				margin: 0 0 1.5em;
+			}
+
+			.page-content :global(h2) {
+				font-family: var(--font-display);
+				font-size: 1.4rem;
+				font-weight: 700;
+				color: var(--ink);
+				margin: 2.2em 0 0.75em;
+				padding-bottom: 0.4em;
+				border-bottom: 2px solid var(--border);
+				position: relative;
+			}
+
+			.page-content :global(h2:first-child) {
+				margin-top: 0;
+			}
+
+			.page-content :global(h2::before) {
+				content: '';
+				position: absolute;
+				bottom: -2px;
+				left: 0;
+				width: 3rem;
+				height: 2px;
+				background: var(--accent);
+			}
+
+			.page-content :global(ul),
+			.page-content :global(ol) {
+				padding-left: 1.5em;
+				margin: 0 0 1.5em;
+			}
+
+			.page-content :global(li) {
+				font-size: 1.0625rem;
+				line-height: 1.75;
+				color: var(--ink);
+				margin-bottom: 0.4em;
+			}
+
+			.page-content :global(strong) {
+				font-weight: 600;
+				color: var(--ink);
+			}
+
+			.page-content :global(a) {
+				color: var(--accent);
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			@media (max-width: 720px) {
+				.page-header {
+					padding: 2rem 1.25rem 1.5rem;
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
-		<main>
-			<h1>{title}</h1>
-			<hr class="divider" />
-			<slot />
+		<main style="width: 100%; max-width: 100%; padding: 0;">
+			<div class="page-band">
+				<header class="page-header">
+					<span class="page-eyebrow">{eyebrow}</span>
+					<h1>{title}</h1>
+				</header>
+				<div class="film-edge" aria-hidden="true">
+					{Array.from({ length: 14 }).map(() => <span class="perf"></span>)}
+				</div>
+			</div>
+			<div class="page-content">
+				<slot />
+			</div>
 		</main>
 		<Footer />
+		<script>
+			import { gsap } from 'gsap';
+			gsap.registerPlugin();
+
+			// GSAP sets inline styles, so the CSS prefers-reduced-motion rule can't stop it — guard in JS
+			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (!reduceMotion) {
+				gsap.from('.page-header', {
+					opacity: 0,
+					y: 14,
+					duration: 0.6,
+					ease: 'power2.out',
+					delay: 0.05
+				});
+			}
+		</script>
 	</body>
 </html>

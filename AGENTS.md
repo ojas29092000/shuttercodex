@@ -1,3 +1,9 @@
+## Design Standard (read first)
+
+**Before writing any article, diagram, animation, or UI change, read `DESIGN-STANDARD.md` at the repo root.** It defines the brand constraints (no real name, no employer name, credential framing only), design tokens, the SVG diagram style guide, GSAP motion rules, the article structure template, which skill/MCP to use for which task, and the pre-publish checklist. Follow it exactly — it exists so any model produces articles indistinguishable from the existing ones.
+
+Deploy rule: review everything on localhost:4321; never push to GitHub unless explicitly told to deploy.
+
 ## Development
 
 When starting the dev server, use background mode:

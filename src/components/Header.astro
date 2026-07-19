@@ -1,10 +1,11 @@
 ---
+import ApertureMark from './ApertureMark.astro';
 import HeaderLink from './HeaderLink.astro';
 ---
 
 <header>
 	<nav>
-		<a href="/" class="wordmark">ShutterCodex</a>
+		<a href="/" class="wordmark"><ApertureMark size={19} /> ShutterCodex</a>
 		<div class="nav-links">
 			<HeaderLink href="/articles">Articles</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
@@ -38,10 +39,18 @@ import HeaderLink from './HeaderLink.astro';
 		color: var(--accent);
 		text-decoration: none;
 		letter-spacing: -0.01em;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
 	}
 
 	.wordmark:hover {
 		color: var(--ink);
+	}
+
+	/* Aperture rotates like an iris ring when the wordmark is hovered */
+	.wordmark:hover :global(.aperture-mark) {
+		transform: rotate(60deg);
 	}
 
 	.nav-links {

@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
@@ -10,6 +9,13 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 const posts = (await getCollection('articles')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const categoryLabels: Record<string, string> = {
+	explainer: 'Explainer',
+	smartphone: 'Smartphone',
+	mirrorless: 'Mirrorless',
+	comparison: 'Comparison',
+};
 ---
 
 <!doctype html>
@@ -17,98 +23,318 @@ const posts = (await getCollection('articles')).sort(
 	<head>
 		<BaseHead title={`Articles | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 		<style>
-			main {
-				width: 960px;
+			/* ===== Dark contact-sheet band ===== */
+			.sheet-band {
+				background: var(--ink);
+				position: relative;
+				overflow: hidden;
 			}
-			ul {
+
+			.sheet-band::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background-image:
+					linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+				background-size: 44px 44px;
+				-webkit-mask-image: radial-gradient(ellipse 75% 80% at center, black 30%, transparent 82%);
+				mask-image: radial-gradient(ellipse 75% 80% at center, black 30%, transparent 82%);
+				pointer-events: none;
+			}
+
+			.sheet-band::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.35) 100%);
+				pointer-events: none;
+			}
+
+			.articles-header {
+				max-width: 1080px;
+				margin: 0 auto;
+				padding: 3rem 1.5rem 2rem;
+				position: relative;
+				z-index: 2;
+			}
+
+			.articles-eyebrow {
+				font-family: var(--font-mono);
+				font-size: 0.65rem;
+				font-weight: 400;
+				text-transform: uppercase;
+				letter-spacing: 0.18em;
+				color: var(--accent-warm);
+				display: block;
+				margin-bottom: 0.75rem;
+			}
+
+			.articles-header h1 {
+				font-family: var(--font-display);
+				font-size: clamp(1.8rem, 3vw, 2.4rem);
+				font-weight: 700;
+				color: #ffffff;
+				margin: 0;
+				letter-spacing: -0.02em;
+			}
+
+			/* Contact-sheet metadata line */
+			.roll-meta {
+				font-family: var(--font-mono);
+				font-size: 0.65rem;
+				letter-spacing: 0.12em;
+				color: rgba(255, 255, 255, 0.5);
+				margin: 0.75rem 0 0;
+			}
+
+			/* Film edge along the bottom of the band */
+			.film-edge {
 				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
+				justify-content: center;
+				gap: 18px;
+				padding: 0 1.5rem 1.25rem;
+				position: relative;
+				z-index: 2;
+				overflow: hidden;
+			}
+
+			.film-edge .perf {
+				width: 10px;
+				height: 14px;
+				border: 1.5px solid rgba(255, 255, 255, 0.22);
+				border-radius: 3px;
+				flex: none;
+			}
+
+			.articles-wrap {
+				max-width: 1080px;
+				margin: 0 auto;
+				padding: 2.5rem 1.5rem 4rem;
+			}
+
+			.articles-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+				gap: 1.25rem;
+				list-style: none;
 				margin: 0;
 				padding: 0;
 			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
+
+			.article-card {
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: 6px;
 				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
 				display: block;
+				padding: 1.75rem;
+				position: relative;
+				transition: border-color 0.18s, box-shadow 0.18s, opacity 0.3s ease, filter 0.3s ease;
 			}
-			.title {
+
+			/* Depth of field: focusing on one card softly defocuses the rest */
+			.articles-grid:has(.article-card:hover) .article-card:not(:hover) {
+				opacity: 0.55;
+				filter: blur(1px);
+			}
+
+			/* AF bracket corners */
+			.article-card::before,
+			.article-card::after {
+				content: '';
+				position: absolute;
+				width: 12px;
+				height: 12px;
+				opacity: 0;
+				transition: opacity 0.18s ease;
+				pointer-events: none;
+			}
+
+			.article-card::before {
+				top: 6px;
+				left: 6px;
+				border-top: 1.5px solid var(--accent);
+				border-left: 1.5px solid var(--accent);
+			}
+
+			.article-card::after {
+				bottom: 6px;
+				right: 6px;
+				border-bottom: 1.5px solid var(--accent);
+				border-right: 1.5px solid var(--accent);
+			}
+
+			.article-card:hover {
+				border-color: var(--accent);
+				box-shadow: 0 4px 20px rgba(33, 81, 204, 0.08);
+			}
+
+			.article-card:hover::before,
+			.article-card:hover::after {
+				opacity: 1;
+			}
+
+			/* Active frame lights up amber */
+			.article-card:hover .card-frame {
+				color: var(--accent-warm);
+				opacity: 1;
+			}
+
+			/* Film frame counter — newest post has the highest frame number */
+			.card-frame {
+				position: absolute;
+				top: 1.75rem;
+				right: 1.75rem;
+				font-family: var(--font-mono);
+				font-size: 0.62rem;
+				letter-spacing: 0.1em;
+				color: var(--ink-muted);
+				opacity: 0.55;
+			}
+
+			.card-category {
+				font-family: var(--font-mono);
+				font-size: 0.62rem;
+				font-weight: 400;
+				text-transform: uppercase;
+				letter-spacing: 0.14em;
+				color: var(--accent-warm);
+				display: block;
+				margin-bottom: 0.75rem;
+			}
+
+			.card-title {
+				font-family: var(--font-display);
+				font-size: 1.125rem;
+				font-weight: 700;
+				color: var(--ink);
+				margin: 0 0 0.625rem;
+				line-height: 1.25;
+				letter-spacing: -0.01em;
+			}
+
+			.card-description {
+				font-family: var(--font-body);
+				font-size: 0.875rem;
+				line-height: 1.65;
+				color: var(--ink-muted);
+				margin: 0 0 1.25rem;
+			}
+
+			.card-meta {
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+			}
+
+			.card-date {
+				font-family: var(--font-mono);
+				font-size: 0.68rem;
+				color: var(--ink-muted);
+				letter-spacing: 0.04em;
+			}
+
+			.empty-state {
+				text-align: center;
+				padding: 4rem 1.5rem;
+				color: var(--ink-muted);
+				font-family: var(--font-body);
+			}
+
+			.empty-state p {
+				font-size: 1rem;
 				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
 			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
+
+			@media (max-width: 600px) {
+				.articles-wrap {
+					padding: 2rem 1.25rem 3rem;
 				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
+				.articles-grid {
+					grid-template-columns: 1fr;
 				}
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
+		<main style="width: 100%; max-width: 100%; padding: 0;">
+			<section class="sheet-band">
+				<header class="articles-header">
+					<span class="articles-eyebrow">ShutterCodex</span>
+					<h1>Articles</h1>
+					<p class="roll-meta" aria-hidden="true">ROLL 001&ensp;&#183;&ensp;{String(posts.length).padStart(2, '0')} {posts.length === 1 ? 'FRAME' : 'FRAMES'} EXPOSED&ensp;&#183;&ensp;EST. 2026</p>
+				</header>
+				<div class="film-edge" aria-hidden="true">
+					{Array.from({ length: 14 }).map(() => <span class="perf"></span>)}
+				</div>
+			</section>
+			<div class="articles-wrap">
+				{posts.length === 0 ? (
+					<div class="empty-state">
+						<p>No articles yet — check back soon.</p>
+					</div>
+				) : (
+					<ul class="articles-grid">
+						{posts.map((post, index) => (
 							<li>
-								<a href={`/articles/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
+								<a class="article-card" href={`/articles/${post.id}/`}>
+									<span class="card-frame" aria-hidden="true">FR {String(posts.length - index).padStart(2, '0')}</span>
+									{post.data.category && (
+										<span class="card-category">
+											{categoryLabels[post.data.category] ?? post.data.category}
+										</span>
 									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
+									<h2 class="card-title">{post.data.title}</h2>
+									{post.data.description && (
+										<p class="card-description">{post.data.description}</p>
+									)}
+									<div class="card-meta">
+										<span class="card-date">
+											<FormattedDate date={post.data.pubDate} />
+										</span>
+									</div>
 								</a>
 							</li>
-						))
-					}
-				</ul>
-			</section>
+						))}
+					</ul>
+				)}
+			</div>
 		</main>
 		<Footer />
+		<script>
+			import { gsap } from 'gsap';
+			import { ScrollTrigger } from 'gsap/ScrollTrigger';
+			gsap.registerPlugin(ScrollTrigger);
+
+			// GSAP sets inline styles, so the CSS prefers-reduced-motion rule can't stop it — guard in JS.
+			// The gsap.set pre-hide must stay inside the guard or reduced-motion users see nothing.
+			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (!reduceMotion) {
+				gsap.from('.articles-header', {
+					opacity: 0,
+					y: 14,
+					duration: 0.6,
+					ease: 'power2.out',
+					delay: 0.05
+				});
+
+				gsap.set('.article-card', { opacity: 0, y: 22 });
+				ScrollTrigger.batch('.article-card', {
+					onEnter: (elements) => {
+						gsap.to(elements, {
+							opacity: 1,
+							y: 0,
+							duration: 0.5,
+							stagger: 0.08,
+							ease: 'power2.out'
+						});
+					},
+					once: true,
+					start: 'top 90%'
+				});
+			}
+		</script>
 	</body>
 </html>
