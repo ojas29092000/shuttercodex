@@ -1,0 +1,290 @@
+---
+title: "Sensor Size Explained: Why It Matters More Than Megapixels"
+description: "Megapixels sell cameras. Sensor size determines what those pixels capture. A physics-first breakdown of why a 12MP phone struggles where a 12MP DSLR doesn't."
+pubDate: 2026-07-19
+category: explainer
+---
+
+The spec sheet puts megapixels at the top of the list. Sensor size is buried in the footnotes, if it appears at all. That ordering is backwards.
+
+A larger sensor doesn't just mean a physically bigger chip — it means each photosite can collect more light, hold more charge before clipping, and produce a signal that overwhelms the noise floor with ease. The megapixel count tells you the resolution of the grid; the sensor size tells you the quality of each cell in that grid. You cannot math your way out of a small sensor — not with more pixels, not with AI upscaling, not with computational stacking. Physics sets the ceiling.
+
+Almost nobody talks about *why* sensor size matters at the level of individual photons and shot noise. I work on embedded camera systems for a living, and the gap between how sensors are marketed and how they actually behave is one of the more reliable sources of customer disappointment in consumer electronics. This article closes that gap.
+
+<aside class="takeaways">
+**WHAT YOU WILL TAKE AWAY**
+
+- Why a larger sensor captures more light per pixel at the same megapixel count
+- What "crop factor" actually means and how it changes your effective focal length
+- How sensor size controls depth of field — and why you can't fully replicate it in software
+- Where computational photography genuinely compensates, and where it provably cannot
+</aside>
+
+## The Six Sensor Sizes You Actually Encounter
+
+Consumer and prosumer cameras span a 50× range in sensor area — from the 1/4-inch chip in an entry-level phone to the 36×24mm full-frame sensor in a professional body.
+
+<figure>
+<svg viewBox="0 0 860 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Side-by-side comparison of six sensor sizes drawn to scale, bottom-aligned: 1/4-inch, 1/2.3-inch, 1-inch, Micro Four Thirds, APS-C, and Full Frame">
+  <rect width="860" height="290" rx="8" fill="#0E1117"/>
+
+  <text x="430" y="22" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5" text-anchor="middle">SENSOR SIZES · DRAWN TO SCALE · BOTTOM-ALIGNED</text>
+
+  <rect x="20" y="30" width="8" height="8" rx="1" fill="#C4871A" opacity="0.85"/>
+  <text x="33" y="39" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.65)">MOBILE</text>
+  <rect x="96" y="30" width="8" height="8" rx="1" fill="#5B8CFF" opacity="0.85"/>
+  <text x="109" y="39" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.65)">DEDICATED CAMERA</text>
+
+  <text x="41" y="60" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700" fill="#C4871A" text-anchor="middle">1/4&quot;</text>
+  <rect x="30" y="224" width="22" height="16" rx="2" fill="rgba(196,135,26,0.22)" stroke="#C4871A" stroke-width="1.5"/>
+  <text x="41" y="259" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.7)" text-anchor="middle">3.6&#xD7;2.7</text>
+  <text x="41" y="274" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle">9.8mm&#xB2;</text>
+
+  <text x="113" y="60" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700" fill="#C4871A" text-anchor="middle">1/2.3&quot;</text>
+  <rect x="95" y="212" width="37" height="28" rx="2" fill="rgba(196,135,26,0.18)" stroke="#C4871A" stroke-width="1.5"/>
+  <text x="113" y="259" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.7)" text-anchor="middle">6.2&#xD7;4.6</text>
+  <text x="113" y="274" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle">28mm&#xB2;</text>
+
+  <text x="214" y="60" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700" fill="#C4871A" text-anchor="middle">1&quot;</text>
+  <rect x="175" y="187" width="79" height="53" rx="2" fill="rgba(196,135,26,0.14)" stroke="#C4871A" stroke-width="1.5"/>
+  <text x="214" y="259" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.7)" text-anchor="middle">13.2&#xD7;8.8</text>
+  <text x="214" y="274" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle">116mm&#xB2;</text>
+
+  <text x="357" y="60" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700" fill="#5B8CFF" text-anchor="middle">MFT</text>
+  <rect x="305" y="162" width="104" height="78" rx="2" fill="rgba(91,140,255,0.12)" stroke="#5B8CFF" stroke-width="1.5"/>
+  <text x="357" y="259" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.7)" text-anchor="middle">17.3&#xD7;13.0</text>
+  <text x="357" y="274" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle">225mm&#xB2;</text>
+
+  <text x="525" y="60" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700" fill="#5B8CFF" text-anchor="middle">APS-C</text>
+  <rect x="455" y="146" width="141" height="94" rx="2" fill="rgba(91,140,255,0.12)" stroke="#5B8CFF" stroke-width="1.5"/>
+  <text x="525" y="259" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.7)" text-anchor="middle">23.5&#xD7;15.6</text>
+  <text x="525" y="274" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle">367mm&#xB2;</text>
+
+  <text x="730" y="60" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700" fill="#5B8CFF" text-anchor="middle">FULL FRAME</text>
+  <rect x="622" y="96" width="216" height="144" rx="2" fill="rgba(91,140,255,0.09)" stroke="#5B8CFF" stroke-width="2"/>
+  <text x="730" y="259" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.7)" text-anchor="middle">36.0&#xD7;24.0</text>
+  <text x="730" y="274" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.5)" text-anchor="middle">864mm&#xB2;</text>
+
+  <line x1="20" y1="240" x2="840" y2="240" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+</svg>
+<figcaption>The six sensor sizes drawn to scale. Full frame is 88× the area of a typical 1/4-inch phone sensor — a gap that no software pipeline can fully bridge.</figcaption>
+</figure>
+
+## Pixel Pitch: How Much Light Each Pixel Gets
+
+At the same megapixel count, the larger sensor has larger pixels. Larger pixels collect more photons, and photons per pixel is the only thing that determines signal quality before any processing begins.
+
+<figure>
+<svg viewBox="0 0 860 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparison of small and large photosites: a small 1-micron pixel receives about 6 photons while a large 8-micron pixel receives about 17 photons in the same exposure">
+  <defs>
+    <marker id="ss-arr" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L0,5 L6,2.5 z" fill="#C4871A"/>
+    </marker>
+  </defs>
+  <rect width="860" height="250" rx="8" fill="#0E1117"/>
+
+  <text x="430" y="22" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5" text-anchor="middle">PIXEL PITCH AND PHOTON COLLECTION</text>
+
+  <text x="85" y="42" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700" fill="#C4871A" letter-spacing="0.5" text-anchor="middle">SMALL PIXEL · 1.0&#x3BC;m</text>
+  <rect x="35" y="54" width="100" height="100" rx="3" fill="rgba(196,135,26,0.1)" stroke="#C4871A" stroke-width="1.5"/>
+  <text x="85" y="110" font-family="'Fraunces',Georgia,serif" font-size="13" font-weight="700" fill="rgba(255,255,255,0.2)" text-anchor="middle">photosite</text>
+
+  <circle cx="53" cy="70" r="3.5" fill="#FFD580" opacity="0.85"/>
+  <circle cx="107" cy="66" r="3.5" fill="#FFD580" opacity="0.7"/>
+  <circle cx="70" cy="88" r="3.5" fill="#FFD580" opacity="0.9"/>
+  <circle cx="95" cy="96" r="3.5" fill="#FFD580" opacity="0.75"/>
+  <circle cx="55" cy="118" r="3.5" fill="#FFD580" opacity="0.8"/>
+  <circle cx="120" cy="112" r="3.5" fill="#FFD580" opacity="0.7"/>
+
+  <text x="85" y="176" font-family="'Fraunces',Georgia,serif" font-size="19" font-weight="700" fill="#C4871A" text-anchor="middle">~6 photons</text>
+  <text x="85" y="194" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.65)" text-anchor="middle">near read noise floor</text>
+  <text x="85" y="212" font-family="'JetBrains Mono',monospace" font-size="10" fill="rgba(255,255,255,0.5)" text-anchor="middle">full well &#x2248; 2,000 e&#x207B;</text>
+
+  <line x1="149" y1="104" x2="223" y2="104" stroke="#C4871A" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ss-arr)"/>
+  <text x="186" y="97" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="rgba(255,255,255,0.7)" text-anchor="middle">64&#xD7; area</text>
+
+  <text x="532" y="42" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700" fill="#5B8CFF" letter-spacing="0.5" text-anchor="middle">LARGE PIXEL · 8.0&#x3BC;m</text>
+  <rect x="237" y="46" width="588" height="108" rx="3" fill="rgba(91,140,255,0.09)" stroke="#5B8CFF" stroke-width="1.5"/>
+  <text x="532" y="106" font-family="'Fraunces',Georgia,serif" font-size="13" font-weight="700" fill="rgba(255,255,255,0.15)" text-anchor="middle">photosite</text>
+
+  <circle cx="264" cy="66" r="4.5" fill="#FFD580" opacity="0.85"/>
+  <circle cx="298" cy="82" r="4.5" fill="#FFD580" opacity="0.75"/>
+  <circle cx="284" cy="104" r="4.5" fill="#FFD580" opacity="0.9"/>
+  <circle cx="332" cy="64" r="4.5" fill="#FFD580" opacity="0.8"/>
+  <circle cx="366" cy="92" r="4.5" fill="#FFD580" opacity="0.7"/>
+  <circle cx="400" cy="72" r="4.5" fill="#FFD580" opacity="0.85"/>
+  <circle cx="434" cy="114" r="4.5" fill="#FFD580" opacity="0.75"/>
+  <circle cx="468" cy="78" r="4.5" fill="#FFD580" opacity="0.9"/>
+  <circle cx="502" cy="98" r="4.5" fill="#FFD580" opacity="0.8"/>
+  <circle cx="536" cy="64" r="4.5" fill="#FFD580" opacity="0.7"/>
+  <circle cx="570" cy="110" r="4.5" fill="#FFD580" opacity="0.85"/>
+  <circle cx="604" cy="80" r="4.5" fill="#FFD580" opacity="0.75"/>
+  <circle cx="638" cy="62" r="4.5" fill="#FFD580" opacity="0.9"/>
+  <circle cx="672" cy="100" r="4.5" fill="#FFD580" opacity="0.8"/>
+  <circle cx="706" cy="74" r="4.5" fill="#FFD580" opacity="0.7"/>
+  <circle cx="740" cy="92" r="4.5" fill="#FFD580" opacity="0.85"/>
+  <circle cx="786" cy="68" r="4.5" fill="#FFD580" opacity="0.75"/>
+
+  <text x="532" y="180" font-family="'Fraunces',Georgia,serif" font-size="19" font-weight="700" fill="#5B8CFF" text-anchor="middle">~17 photons</text>
+  <text x="532" y="198" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.65)" text-anchor="middle">same exposure time and scene brightness</text>
+  <text x="532" y="216" font-family="'JetBrains Mono',monospace" font-size="10" fill="rgba(255,255,255,0.5)" text-anchor="middle">full well &#x2248; 80,000 e&#x207B;</text>
+</svg>
+<figcaption>A pixel pitch of 8&#xB5;m has 64&#xD7; the collection area of a 1&#xB5;m pixel — and 40&#xD7; the full-well capacity. Both differences directly translate into dynamic range and low-light performance before any ISP processing runs.</figcaption>
+</figure>
+
+Double the pixel pitch and you get four times the photon count and roughly two stops of improved signal-to-noise ratio. Phone sensors typically measure 1–1.4&#xB5;m. A 24MP full-frame sensor lands at 5.9&#xB5;m — a 17–35&#xD7; gap in collection area per pixel.
+
+## Crop Factor: What It Means for Your Lens
+
+Lens focal lengths are specified for a 35mm full-frame sensor. A smaller sensor captures only the central portion of the image circle, producing a narrower field of view — as if you were using a longer lens.
+
+<figure>
+<svg viewBox="0 0 860 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nested rectangle diagram showing how a full-frame, APS-C, and Micro Four Thirds sensor each capture a different field of view through the same lens">
+  <rect width="860" height="270" rx="8" fill="#0E1117"/>
+  <text x="430" y="24" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5" text-anchor="middle">CROP FACTOR · SAME LENS · THREE SENSOR SIZES</text>
+
+  <rect x="80" y="40" width="700" height="188" rx="4" fill="rgba(91,140,255,0.07)" stroke="#5B8CFF" stroke-width="2"/>
+  <text x="90" y="57" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700" fill="#5B8CFF">FULL FRAME · 1&#xD7;</text>
+  <text x="90" y="72" font-family="'JetBrains Mono',monospace" font-size="11.5" fill="rgba(91,140,255,0.8)">50mm &#x2192; 50mm equivalent</text>
+
+  <rect x="176" y="78" width="508" height="128" rx="3" fill="rgba(196,135,26,0.1)" stroke="#C4871A" stroke-width="1.5"/>
+  <text x="186" y="95" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700" fill="#C4871A">APS-C · 1.5&#xD7;</text>
+  <text x="186" y="110" font-family="'JetBrains Mono',monospace" font-size="11.5" fill="rgba(196,135,26,0.8)">50mm &#x2192; 75mm equivalent</text>
+
+  <rect x="260" y="122" width="340" height="72" rx="2" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+  <text x="270" y="139" font-family="'JetBrains Mono',monospace" font-size="13" font-weight="700" fill="rgba(255,255,255,0.8)">MFT · 2&#xD7;</text>
+  <text x="270" y="155" font-family="'JetBrains Mono',monospace" font-size="11.5" fill="rgba(255,255,255,0.6)">50mm &#x2192; 100mm equivalent</text>
+
+  <text x="430" y="252" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.5)" text-anchor="middle">Same optical center point · smaller sensor = narrower field of view = longer apparent focal length</text>
+</svg>
+<figcaption>A 50mm lens projects the same image circle onto each sensor. APS-C captures the central 67%; Micro Four Thirds captures the central 50%. The narrower field of view looks like a longer focal length — 75mm and 100mm equivalent respectively.</figcaption>
+</figure>
+
+Crop factor is a tradeoff, not a flaw. Wildlife shooters use APS-C bodies deliberately — a 400mm lens behaves like 600mm equivalent. But note: crop factor changes *field of view*, not depth of field. A 50mm f/1.8 on APS-C gives 75mm equivalent framing, but the depth of field physics stay at 50mm f/1.8. To match full-frame 50mm f/1.8 background separation, you'd need 33mm f/1.2 on APS-C.
+
+## Depth of Field: What Sensor Size Can and Cannot Do
+
+Larger sensors require longer focal lengths for the same field of view, and longer focal lengths at the same aperture produce shallower depth of field. This is why full-frame portrait work has a look phones cannot match.
+
+<figure>
+<svg viewBox="0 0 860 235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two-panel comparison of depth of field: phone camera with everything in focus versus full-frame camera with subject sharp and background blurred">
+  <rect width="860" height="235" rx="8" fill="#0E1117"/>
+
+  <text x="215" y="22" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700" fill="#C4871A" letter-spacing="0.5" text-anchor="middle">PHONE · SMALL SENSOR</text>
+  <text x="215" y="37" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.55)" text-anchor="middle">deep depth of field</text>
+
+  <rect x="25" y="90" width="42" height="32" rx="3" fill="rgba(196,135,26,0.15)" stroke="#C4871A" stroke-width="1.5"/>
+  <circle cx="67" cy="106" r="11" fill="none" stroke="#C4871A" stroke-width="1.5"/>
+
+  <polygon points="78,60 78,152 400,175 400,40" fill="rgba(196,135,26,0.05)" stroke="#C4871A" stroke-width="1" stroke-dasharray="5,4"/>
+
+  <circle cx="178" cy="93" r="18" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"/>
+  <rect x="167" y="111" width="22" height="42" rx="2" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"/>
+  <text x="178" y="170" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.8)" text-anchor="middle">SHARP</text>
+
+  <rect x="300" y="72" width="55" height="80" rx="2" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.75)" stroke-width="1.5"/>
+  <rect x="310" y="82" width="10" height="10" fill="rgba(255,255,255,0.2)"/>
+  <rect x="328" y="82" width="10" height="10" fill="rgba(255,255,255,0.2)"/>
+  <rect x="310" y="100" width="10" height="10" fill="rgba(255,255,255,0.2)"/>
+  <rect x="328" y="100" width="10" height="10" fill="rgba(255,255,255,0.2)"/>
+  <rect x="355" y="85" width="35" height="67" rx="2" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.75)" stroke-width="1.5"/>
+  <text x="340" y="170" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.8)" text-anchor="middle">SHARP</text>
+
+  <text x="215" y="210" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(196,135,26,0.85)" text-anchor="middle">Both subject and background render sharp</text>
+
+  <line x1="430" y1="20" x2="430" y2="215" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <text x="645" y="22" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700" fill="#5B8CFF" letter-spacing="0.5" text-anchor="middle">FULL FRAME · LARGE SENSOR</text>
+  <text x="645" y="37" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.55)" text-anchor="middle">shallow depth of field</text>
+
+  <rect x="455" y="90" width="42" height="32" rx="3" fill="rgba(91,140,255,0.15)" stroke="#5B8CFF" stroke-width="1.5"/>
+  <circle cx="497" cy="106" r="11" fill="none" stroke="#5B8CFF" stroke-width="1.5"/>
+
+  <polygon points="508,88 508,124 570,134 570,78" fill="rgba(91,140,255,0.08)" stroke="#5B8CFF" stroke-width="1.5" stroke-dasharray="5,4"/>
+
+  <circle cx="570" cy="93" r="18" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.85)" stroke-width="1.5"/>
+  <rect x="559" y="111" width="22" height="42" rx="2" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.85)" stroke-width="1.5"/>
+  <line x1="551" y1="68" x2="551" y2="76" stroke="#5B8CFF" stroke-width="2"/>
+  <line x1="551" y1="68" x2="559" y2="68" stroke="#5B8CFF" stroke-width="2"/>
+  <line x1="601" y1="68" x2="601" y2="76" stroke="#5B8CFF" stroke-width="2"/>
+  <line x1="601" y1="68" x2="593" y2="68" stroke="#5B8CFF" stroke-width="2"/>
+  <line x1="551" y1="158" x2="551" y2="150" stroke="#5B8CFF" stroke-width="2"/>
+  <line x1="551" y1="158" x2="559" y2="158" stroke="#5B8CFF" stroke-width="2"/>
+  <line x1="601" y1="158" x2="601" y2="150" stroke="#5B8CFF" stroke-width="2"/>
+  <line x1="601" y1="158" x2="593" y2="158" stroke="#5B8CFF" stroke-width="2"/>
+  <text x="575" y="170" font-family="'JetBrains Mono',monospace" font-size="11" fill="#5B8CFF" text-anchor="middle">IN FOCUS</text>
+
+  <rect x="715" y="72" width="55" height="80" rx="2" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.18)" stroke-width="3"/>
+  <rect x="712" y="70" width="59" height="84" rx="2" fill="rgba(255,255,255,0.015)" stroke="rgba(255,255,255,0.1)" stroke-width="5"/>
+  <rect x="755" y="85" width="35" height="67" rx="2" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.15)" stroke-width="3"/>
+  <text x="742" y="170" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.35)" text-anchor="middle">BLURRED</text>
+
+  <text x="645" y="210" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(91,140,255,0.85)" text-anchor="middle">Background falls outside the depth-of-field zone</text>
+</svg>
+<figcaption>The narrow DOF zone on a full-frame body (shown as the cobalt trapezoid) keeps only the subject sharp; the background falls outside it and renders blurred. On a phone, the wide DOF zone covers the entire scene — computational portrait mode then tries to reconstruct this separation from a depth estimate, which fails at edges.</figcaption>
+</figure>
+
+Computational portrait mode segments the scene and applies a synthetic blur, but it cannot recover out-of-focus optical information that was never captured. The tell is the hard edge halo on hair and glasses — no amount of neural-net training fixes a fundamentally missing signal.
+
+## Dynamic Range: Where Small Sensors Break
+
+Full-frame sensors can record 14–15 stops of latitude in a single raw frame. Flagship phones manage 12–13. That 2–3 stop gap is in the shadows — exactly where noise compounds, HDR ghosting appears, and highlight recovery falls apart.
+
+<figure>
+<svg viewBox="0 0 860 215" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Horizontal bar chart comparing single-frame dynamic range: phone at 12-13 stops, 1-inch compact at 13 stops, APS-C at 14 stops, full-frame at 15 stops">
+  <rect width="860" height="215" rx="8" fill="#0E1117"/>
+
+  <text x="430" y="22" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5" text-anchor="middle">SINGLE-FRAME DYNAMIC RANGE · STOPS OF LATITUDE</text>
+
+  <line x1="120" y1="34" x2="120" y2="192" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <line x1="355" y1="34" x2="355" y2="192" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="590" y1="34" x2="590" y2="192" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="825" y1="34" x2="825" y2="192" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+
+  <text x="120" y="207" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.4)" text-anchor="middle">0</text>
+  <text x="355" y="207" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.4)" text-anchor="middle">5</text>
+  <text x="590" y="207" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.4)" text-anchor="middle">10</text>
+  <text x="825" y="207" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.4)" text-anchor="middle">15 stops</text>
+
+  <text x="110" y="56" font-family="'JetBrains Mono',monospace" font-size="11.5" fill="#C4871A" text-anchor="end">PHONE 1/2.3"</text>
+  <rect x="120" y="40" width="564" height="24" rx="2" fill="rgba(196,135,26,0.65)"/>
+  <text x="676" y="56" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="rgba(255,255,255,0.85)" text-anchor="end">12–13</text>
+
+  <text x="110" y="98" font-family="'JetBrains Mono',monospace" font-size="11.5" fill="#C4871A" text-anchor="end">1" COMPACT</text>
+  <rect x="120" y="82" width="611" height="24" rx="2" fill="rgba(196,135,26,0.75)"/>
+  <text x="723" y="98" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="rgba(255,255,255,0.85)" text-anchor="end">13</text>
+
+  <text x="110" y="140" font-family="'JetBrains Mono',monospace" font-size="11.5" fill="#5B8CFF" text-anchor="end">APS-C</text>
+  <rect x="120" y="124" width="658" height="24" rx="2" fill="rgba(91,140,255,0.70)"/>
+  <text x="770" y="140" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="rgba(255,255,255,0.85)" text-anchor="end">14</text>
+
+  <text x="110" y="182" font-family="'JetBrains Mono',monospace" font-size="11.5" fill="#5B8CFF" text-anchor="end">FULL FRAME</text>
+  <rect x="120" y="166" width="705" height="24" rx="2" fill="rgba(91,140,255,0.85)"/>
+  <text x="817" y="182" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="rgba(255,255,255,0.90)" text-anchor="end">15</text>
+</svg>
+<figcaption>Single-frame dynamic range in stops. Multi-frame HDR stacking can add 2–3 stops to a phone's effective range in static scenes, but the benefit evaporates the moment a subject moves between frames.</figcaption>
+</figure>
+
+Multi-frame HDR and night mode stack frames to narrow the gap — but only for static subjects. A moving subject between frames creates ghosting; a single raw capture from a full-frame body avoids the problem entirely by recording the full dynamic range simultaneously.
+
+## What Computational Photography Actually Buys You
+
+| Scenario | Small sensor approach | Result vs. large sensor |
+|---|---|---|
+| Bright daylight, static scene | Single frame, tone mapping | Essentially equivalent at output resolution |
+| High-contrast static scene | Multi-frame HDR merge | 1–2 stops gained, no motion ghosting concern |
+| Dark static scene, tripod | Night mode stack | 1.5–2 stops gained; full-frame still wins on SNR |
+| Moving subject, low light | Single fast exposure | 2–3 stop deficit versus full-frame with fast glass |
+| Background blur (portrait) | Depth-estimated mask + synthetic blur | Looks fine at social size; fails on edge-cases |
+| Telephoto reach | Periscope optical zoom or digital crop | Optical zoom competitive up to 5–10× |
+| Action / burst / sports | AI tracking + fast readout | Competitive on acquisition speed; SNR constrained by area |
+
+## Buying Advice: When Does Sensor Size Matter
+
+**It does not matter if** you shoot primarily in daylight, your output is social media or web, and you are not doing fast-motion low-light work.
+
+**It matters if** you shoot in mixed or artificial light regularly, you print above A4, you want optical depth-of-field control, or you are shooting fast action in anything less than studio lighting.
+
+The phone camera is a legitimate tool for the first category. It is not competitive in the second — and no software update changes that, because the physics of sensor area is not a software parameter.
+
+> The sensor size question is really the photon budget question — how many photons does this camera collect per pixel per second of exposure, and what is the noise floor it has to rise above. You cannot compress a generous photon budget into a cramped pixel and then uncompress it in software. The ISP article and the autofocus article on this site explain the downstream steps; this is where it starts.
