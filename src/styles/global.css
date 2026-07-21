@@ -5,6 +5,9 @@
 	--ink-muted: #4B5775;
 	--accent: #2151CC;
 	--accent-warm: #C4871A;
+	/* Darkened amber for TEXT on light backgrounds. --accent-warm is a fill/
+	   border colour: at 2.9:1 on white it fails WCAG AA for small text. */
+	--accent-warm-ink: #8A5D0F;
 	--border: #DDE1ED;
 
 	--font-display: 'Fraunces', Georgia, serif;

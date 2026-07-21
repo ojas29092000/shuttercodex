@@ -362,7 +362,7 @@ const categoryLabels: Record<string, string> = {
 				font-size: 0.65rem;
 				text-transform: uppercase;
 				letter-spacing: 0.18em;
-				color: var(--accent-warm);
+				color: var(--accent-warm-ink);
 				display: block;
 				margin-bottom: 0.75rem;
 			}
@@ -381,6 +381,83 @@ const categoryLabels: Record<string, string> = {
 
 			.prose :global(.takeaways li:last-child) {
 				margin-bottom: 0;
+			}
+
+			/* Highlighter for the one line per section a skimmer must retain.
+			   Full-coverage band. box-decoration-break: clone is required so the
+			   padding and radius repeat on every line when a highlight wraps —
+			   without it a wrapped highlight loses its ends and looks broken. */
+			.prose :global(mark) {
+				background: rgba(196, 135, 26, 0.26);
+				color: inherit;
+				padding: 0.12em 0.24em;
+				margin: 0 -0.06em;
+				border-radius: 3px;
+				-webkit-box-decoration-break: clone;
+				box-decoration-break: clone;
+			}
+
+			/* "The engineering" — first-principles explanation behind a verdict.
+			   Amber marks hardware/physics reasoning, per the design tokens. */
+			.prose :global(.engineering) {
+				background: rgba(196, 135, 26, 0.055);
+				border: 1px solid rgba(196, 135, 26, 0.2);
+				border-left: 3px solid var(--accent-warm);
+				border-radius: 0 6px 6px 0;
+				padding: 1rem 1.25rem;
+				margin: 0 0 1.75em;
+			}
+
+			.prose :global(.engineering p) {
+				margin: 0;
+				font-size: 0.9375rem;
+				line-height: 1.68;
+				color: var(--ink);
+			}
+
+			.prose :global(.engineering strong:first-child) {
+				font-family: var(--font-mono);
+				font-size: 0.65rem;
+				text-transform: uppercase;
+				letter-spacing: 0.16em;
+				color: var(--accent-warm-ink);
+				font-weight: 600;
+			}
+
+			/* "See it yourself" — pointers to source imagery hosted elsewhere.
+			   We never reproduce third-party photos; we send the reader to them. */
+			.prose :global(.see-also) {
+				background: var(--surface);
+				border: 1px dashed var(--border);
+				border-radius: 6px;
+				padding: 0.9rem 1.15rem;
+				margin: 0 0 2em;
+			}
+
+			.prose :global(.see-also p) {
+				margin: 0;
+				font-size: 0.875rem;
+				line-height: 1.6;
+				color: var(--ink-muted);
+			}
+
+			.prose :global(.see-also strong) {
+				font-family: var(--font-mono);
+				font-size: 0.68rem;
+				text-transform: uppercase;
+				letter-spacing: 0.14em;
+				color: var(--accent-warm-ink);
+				font-weight: 600;
+			}
+
+			/* External links get an unobtrusive outbound marker */
+			.prose :global(a[target='_blank'])::after {
+				content: '↗';
+				display: inline-block;
+				margin-left: 0.18em;
+				font-size: 0.78em;
+				vertical-align: baseline;
+				opacity: 0.55;
 			}
 
 			.updated-note {

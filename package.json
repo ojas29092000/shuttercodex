@@ -1,5 +1,5 @@
 {
-  "name": "users-ojas-code-projects-shuttercodex",
+  "name": "shuttercodex",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -17,6 +17,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.1.1",
     "gsap": "^3.15.0",
+    "rehype-external-links": "^3.0.0",
     "sharp": "^0.35.0"
   }
 }

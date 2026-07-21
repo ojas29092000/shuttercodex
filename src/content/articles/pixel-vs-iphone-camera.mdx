@@ -1,0 +1,461 @@
+---
+title: "iPhone 16 Pro vs Pixel 9 Pro Camera: Which One Actually Wins for How You Shoot"
+description: "The Pixel loses portraits. Neither phone is good at the zoom you use most. And the biggest gap between them is a camera nobody talks about — with the engineering reason behind each verdict."
+pubDate: 2026-07-21T22:24:07+05:30
+category: comparison
+---
+
+Three things are true about these two cameras that almost nobody says out loud.
+
+The Pixel loses portraits. Neither phone is good at the zoom level you use most. And the single biggest difference between them is a camera you probably ignore.
+
+I work on embedded camera systems, so for each verdict below there is a short note on *why* — the physics or the architecture that produces the result. The scores are evidence. The engineering is the explanation.
+
+<figure>
+<svg viewBox="0 0 860 352" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dumbbell chart of DXOMARK sub-scores. Ultra-wide: iPhone 137, Pixel 157. Video: iPhone 167, Pixel 155. Telephoto: iPhone 133, Pixel 145. Stills overall: iPhone 158, Pixel 163. Portrait bokeh: iPhone 160, Pixel 155. Main camera: iPhone 168, Pixel 170.">
+  <rect width="860" height="352" rx="8" fill="#0E1117"/>
+
+  <text x="40" y="26" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5">DXOMARK SUB-SCORES &#xB7; SORTED BY SIZE OF GAP</text>
+
+  <circle cx="497" cy="22" r="5.5" fill="#5B8CFF"/>
+  <text x="509" y="26" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.72)">iPHONE 16 PRO</text>
+  <circle cx="640" cy="22" r="5.5" fill="#C4871A"/>
+  <text x="652" y="26" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.72)">PIXEL 9 PRO</text>
+
+  <line x1="200" y1="52" x2="200" y2="310" stroke="rgba(255,255,255,0.10)" stroke-width="1" stroke-dasharray="2,4"/>
+  <line x1="327" y1="52" x2="327" y2="310" stroke="rgba(255,255,255,0.10)" stroke-width="1" stroke-dasharray="2,4"/>
+  <line x1="453" y1="52" x2="453" y2="310" stroke="rgba(255,255,255,0.10)" stroke-width="1" stroke-dasharray="2,4"/>
+  <line x1="580" y1="52" x2="580" y2="310" stroke="rgba(255,255,255,0.10)" stroke-width="1" stroke-dasharray="2,4"/>
+  <line x1="707" y1="52" x2="707" y2="310" stroke="rgba(255,255,255,0.10)" stroke-width="1" stroke-dasharray="2,4"/>
+
+  <text x="182" y="86" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(255,255,255,0.88)" text-anchor="end">ULTRA-WIDE</text>
+  <line x1="289" y1="82" x2="542" y2="82" stroke="#C4871A" stroke-width="4" stroke-opacity="0.5" stroke-linecap="round"/>
+  <circle cx="289" cy="82" r="11" fill="#5B8CFF"/>
+  <text x="289" y="85.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">137</text>
+  <circle cx="542" cy="82" r="11" fill="#C4871A"/>
+  <text x="542" y="85.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">157</text>
+  <text x="790" y="86" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="#C4871A">+20</text>
+
+  <text x="182" y="128" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(255,255,255,0.88)" text-anchor="end">VIDEO</text>
+  <line x1="517" y1="124" x2="669" y2="124" stroke="#5B8CFF" stroke-width="4" stroke-opacity="0.5" stroke-linecap="round"/>
+  <circle cx="517" cy="124" r="11" fill="#C4871A"/>
+  <text x="517" y="127.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">155</text>
+  <circle cx="669" cy="124" r="11" fill="#5B8CFF"/>
+  <text x="669" y="127.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">167</text>
+  <text x="790" y="128" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="#5B8CFF">+12</text>
+
+  <text x="182" y="170" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(255,255,255,0.88)" text-anchor="end">TELEPHOTO</text>
+  <line x1="238" y1="166" x2="390" y2="166" stroke="#C4871A" stroke-width="4" stroke-opacity="0.5" stroke-linecap="round"/>
+  <circle cx="238" cy="166" r="11" fill="#5B8CFF"/>
+  <text x="238" y="169.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">133</text>
+  <circle cx="390" cy="166" r="11" fill="#C4871A"/>
+  <text x="390" y="169.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">145</text>
+  <text x="790" y="170" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="#C4871A">+12</text>
+
+  <text x="182" y="212" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(255,255,255,0.88)" text-anchor="end">STILLS OVERALL</text>
+  <line x1="555" y1="208" x2="618" y2="208" stroke="#C4871A" stroke-width="4" stroke-opacity="0.5" stroke-linecap="round"/>
+  <circle cx="555" cy="208" r="11" fill="#5B8CFF"/>
+  <text x="555" y="211.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">158</text>
+  <circle cx="618" cy="208" r="11" fill="#C4871A"/>
+  <text x="618" y="211.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">163</text>
+  <text x="790" y="212" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="#C4871A">+5</text>
+
+  <text x="182" y="254" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(255,255,255,0.88)" text-anchor="end">PORTRAIT / BOKEH</text>
+  <line x1="517" y1="250" x2="580" y2="250" stroke="#5B8CFF" stroke-width="4" stroke-opacity="0.5" stroke-linecap="round"/>
+  <circle cx="517" cy="250" r="11" fill="#C4871A"/>
+  <text x="517" y="253.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">155</text>
+  <circle cx="580" cy="250" r="11" fill="#5B8CFF"/>
+  <text x="580" y="253.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">160</text>
+  <text x="790" y="254" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="#5B8CFF">+5</text>
+
+  <text x="182" y="296" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(255,255,255,0.55)" text-anchor="end">MAIN CAMERA</text>
+  <line x1="681" y1="292" x2="707" y2="292" stroke="#C4871A" stroke-width="4" stroke-opacity="0.5" stroke-linecap="round"/>
+  <circle cx="681" cy="292" r="11" fill="#5B8CFF"/>
+  <text x="681" y="295.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">168</text>
+  <circle cx="707" cy="292" r="11" fill="#C4871A"/>
+  <text x="707" y="295.5" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">170</text>
+  <text x="790" y="296" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="rgba(255,255,255,0.45)">+2</text>
+
+  <line x1="200" y1="310" x2="770" y2="310" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+  <text x="200" y="328" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.45)" text-anchor="middle">130</text>
+  <text x="327" y="328" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.45)" text-anchor="middle">140</text>
+  <text x="453" y="328" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.45)" text-anchor="middle">150</text>
+  <text x="580" y="328" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.45)" text-anchor="middle">160</text>
+  <text x="707" y="328" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.45)" text-anchor="middle">170</text>
+  <text x="790" y="328" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.4)" text-anchor="middle">GAP</text>
+  <text x="485" y="345" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.35)" text-anchor="middle">SCORE &#x2014; HIGHER IS BETTER &#x2192;</text>
+</svg>
+<figcaption>Each row plots both phones on the same axis; the bar between them <em>is</em> the gap, coloured for whoever wins it. Sorted longest gap first. The row that matters most is the last one: <strong>the main cameras are effectively tied at 168 and 170</strong> — so every real difference between these phones lives in the supporting cameras and in video, not in the camera you shoot with most.</figcaption>
+</figure>
+
+## The Hardware
+
+<figure>
+<svg viewBox="0 0 700 592" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hardware compared one camera at a time. Level 1 main: sensors 1/1.28 and 1/1.31 inch, apertures f/1.78 and f/1.68, a dead heat. Level 2 ultra-wide: identical 1/2.55 inch sensors, apertures f/2.2 and f/1.7, Pixel gathers 1.7 times the light. Level 3 telephoto: both f/2.8, but the Pixel sensor is 1/2.55 inch against 1/3.06 inch with four times the pixels.">
+  <rect width="700" height="592" rx="8" fill="#0E1117"/>
+
+  <text x="40" y="28" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5">ONE CAMERA AT A TIME</text>
+  <circle cx="512" cy="24" r="5.5" fill="#5B8CFF"/>
+  <text x="524" y="28" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.72)">iPHONE</text>
+  <circle cx="600" cy="24" r="5.5" fill="#C4871A"/>
+  <text x="612" y="28" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(255,255,255,0.72)">PIXEL</text>
+
+  <text x="40" y="50" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(255,255,255,0.38)" letter-spacing="1">SENSOR &#x2014; TO SCALE</text>
+  <text x="329" y="50" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(255,255,255,0.38)" letter-spacing="1" text-anchor="middle">APERTURE &#x2014; TO SCALE</text>
+  <text x="430" y="50" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(255,255,255,0.38)" letter-spacing="1">SPECS</text>
+
+  <text x="40" y="78" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700" fill="rgba(255,255,255,0.92)">1 &#x2014; MAIN</text>
+  <rect x="530" y="62" width="150" height="24" rx="4" fill="rgba(255,255,255,0.10)"/>
+  <text x="605" y="78" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(255,255,255,0.82)" text-anchor="middle">A DEAD HEAT</text>
+  <rect x="40" y="96" width="170" height="128" rx="3" fill="rgba(91,140,255,0.22)" stroke="#5B8CFF" stroke-width="1.5"/>
+  <rect x="42" y="99" width="166" height="125" rx="3" fill="none" stroke="#C4871A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="125" y="240" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.72)" text-anchor="middle">1/1.28&#x2033; + 1/1.31&#x2033;</text>
+  <circle cx="290" cy="156" r="27" fill="rgba(91,140,255,0.45)" stroke="#5B8CFF" stroke-width="1.5"/>
+  <circle cx="368" cy="156" r="29" fill="rgba(196,135,26,0.45)" stroke="#C4871A" stroke-width="1.5"/>
+  <text x="290" y="198" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(91,140,255,0.95)" text-anchor="middle">f/1.78</text>
+  <text x="368" y="198" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(196,135,26,0.95)" text-anchor="middle">f/1.68</text>
+  <text x="430" y="140" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(91,140,255,0.95)">48MP &#xB7; 24mm</text>
+  <text x="430" y="162" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(196,135,26,0.95)">50MP &#xB7; 25mm</text>
+  <line x1="40" y1="254" x2="680" y2="254" stroke="rgba(255,255,255,0.10)"/>
+
+  <text x="40" y="290" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700" fill="rgba(255,255,255,0.92)">2 &#x2014; ULTRA-WIDE</text>
+  <rect x="530" y="274" width="150" height="24" rx="4" fill="rgba(196,135,26,0.24)"/>
+  <text x="605" y="290" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="#C4871A" text-anchor="middle">1.7&#xD7; THE LIGHT</text>
+  <rect x="40" y="310" width="85" height="64" rx="3" fill="rgba(91,140,255,0.22)" stroke="#5B8CFF" stroke-width="1.5"/>
+  <rect x="42" y="312" width="81" height="60" rx="3" fill="none" stroke="#C4871A" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="82" y="390" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.72)" text-anchor="middle">1/2.55&#x2033; &#x2014; IDENTICAL</text>
+  <circle cx="290" cy="342" r="22" fill="rgba(91,140,255,0.45)" stroke="#5B8CFF" stroke-width="1.5"/>
+  <circle cx="368" cy="342" r="28" fill="rgba(196,135,26,0.45)" stroke="#C4871A" stroke-width="1.5"/>
+  <text x="290" y="384" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(91,140,255,0.95)" text-anchor="middle">f/2.2</text>
+  <text x="368" y="384" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(196,135,26,0.95)" text-anchor="middle">f/1.7</text>
+  <text x="430" y="332" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(91,140,255,0.95)">48MP &#xB7; 120&#xB0;</text>
+  <text x="430" y="354" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(196,135,26,0.95)">48MP &#xB7; 123&#xB0;</text>
+  <line x1="40" y1="406" x2="680" y2="406" stroke="rgba(255,255,255,0.10)"/>
+
+  <text x="40" y="442" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700" fill="rgba(255,255,255,0.92)">3 &#x2014; TELEPHOTO</text>
+  <rect x="530" y="426" width="150" height="24" rx="4" fill="rgba(196,135,26,0.24)"/>
+  <text x="605" y="442" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="#C4871A" text-anchor="middle">4&#xD7; THE PIXELS</text>
+  <rect x="40" y="462" width="85" height="64" rx="3" fill="rgba(196,135,26,0.32)" stroke="#C4871A" stroke-width="1.5"/>
+  <rect x="40" y="473" width="71" height="53" rx="3" fill="rgba(91,140,255,0.45)" stroke="#5B8CFF" stroke-width="1.5"/>
+  <text x="82" y="542" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.72)" text-anchor="middle">1/2.55&#x2033; vs 1/3.06&#x2033; &#x2014; 1.44&#xD7;</text>
+  <circle cx="290" cy="494" r="17" fill="rgba(91,140,255,0.45)" stroke="#5B8CFF" stroke-width="1.5"/>
+  <circle cx="368" cy="494" r="17" fill="rgba(196,135,26,0.45)" stroke="#C4871A" stroke-width="1.5"/>
+  <text x="290" y="528" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(91,140,255,0.95)" text-anchor="middle">f/2.8</text>
+  <text x="368" y="528" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(196,135,26,0.95)" text-anchor="middle">f/2.8</text>
+  <text x="430" y="484" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(91,140,255,0.95)">12MP &#xB7; 120mm</text>
+  <text x="430" y="506" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="rgba(196,135,26,0.95)">48MP &#xB7; 113mm</text>
+
+  <text x="40" y="576" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.42)">EACH LEVEL: SENSOR AREA &#xD7; APERTURE = HOW MUCH LIGHT THAT CAMERA CAN COLLECT</text>
+</svg>
+<figcaption>One camera per level, each read left to right: sensor size, then aperture, then the numbers. Level 1 — near-identical on both counts, which is the tie. Level 2 — the same sensor, so the whole gap is that visibly larger aperture circle. Level 3 — the same aperture, so the whole gap is that visibly larger sensor. Every shape is drawn to true scale.</figcaption>
+</figure>
+
+Carry one number into the rest of this article: the ultra-wide and telephoto sensors are **roughly a quarter the area of the main sensor** on both phones. Sensor area — not megapixel count — sets how many photons each pixel can collect before any processing runs, which is why the supporting cameras are where both phones show strain first, and why the widest gaps in the scores show up there rather than on the camera you use most.
+
+That principle is the single most useful thing to know when reading any camera spec sheet, and I have unpacked it properly in [Sensor Size Explained](/articles/sensor-size-explained/) — including why full frame is 88× the area of a typical phone sensor, and why doubling pixel pitch buys you roughly two stops of signal-to-noise.
+
+## Ultra-Wide: The Gap Nobody Mentions
+
+**Pixel, by twenty points — the widest margin anywhere here.** It scores 157 against the iPhone's 137, and "lack of detail in ultra-wide photos" sits in DXOMARK's list of iPhone weaknesses.
+
+<aside class="engineering">
+**THE ENGINEERING** — Both ultra-wides use a sensor of the same size, 1/2.55″, so aperture is the *only* variable changing how much light arrives. f/1.7 against f/2.2 is **1.7× the light** — three-quarters of a stop. And these are small sensors, roughly a quarter the area of the main camera, so they are photon-starved before you start. That is the steep part of the noise curve, where extra light buys the most visible detail.
+</aside>
+
+If you shoot landscapes, interiors or architecture, <mark>this matters more than anything else in this comparison</mark> — and it is the category every spec chart leaves out.
+
+<figure>
+<svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="What 0.74 stops costs. With identical sensors and the same shutter speed, the Pixel ultra-wide at f/1.7 collects 1.67 times the light of the iPhone at f/2.2. To match exposure the iPhone must shoot ISO 670 where the Pixel shoots ISO 400.">
+  <rect width="700" height="250" rx="8" fill="#0E1117"/>
+  <text x="40" y="26" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5">SAME SENSOR, SAME SHUTTER &#x2014; WHAT THE APERTURE COSTS</text>
+
+  <text x="195" y="56" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(255,255,255,0.38)" letter-spacing="1">LIGHT COLLECTED</text>
+  <text x="590" y="56" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(255,255,255,0.38)" letter-spacing="1" text-anchor="middle">ISO TO MATCH</text>
+
+  <text x="40" y="94" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="#5B8CFF">iPHONE</text>
+  <text x="180" y="94" font-family="'JetBrains Mono',monospace" font-size="10" fill="rgba(91,140,255,0.9)" text-anchor="end">f/2.2</text>
+  <rect x="195" y="78" width="155" height="26" rx="3" fill="rgba(91,140,255,0.55)"/>
+  <text x="360" y="95" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.6)">1.0&#xD7;</text>
+  <rect x="520" y="76" width="140" height="30" rx="4" fill="rgba(248,81,73,0.20)"/>
+  <text x="590" y="96" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700" fill="rgba(248,81,73,0.95)" text-anchor="middle">ISO 670</text>
+
+  <text x="40" y="154" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="#C4871A">PIXEL</text>
+  <text x="180" y="154" font-family="'JetBrains Mono',monospace" font-size="10" fill="rgba(196,135,26,0.9)" text-anchor="end">f/1.7</text>
+  <rect x="195" y="138" width="260" height="26" rx="3" fill="rgba(196,135,26,0.7)"/>
+  <text x="465" y="155" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(196,135,26,0.95)">1.67&#xD7;</text>
+  <rect x="520" y="136" width="140" height="30" rx="4" fill="rgba(63,185,80,0.18)"/>
+  <text x="590" y="156" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700" fill="rgba(63,185,80,0.95)" text-anchor="middle">ISO 400</text>
+
+  <line x1="40" y1="192" x2="660" y2="192" stroke="rgba(255,255,255,0.10)"/>
+  <text x="40" y="216" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.62)">0.74 STOPS &#x2014; AND SINCE BOTH SENSORS ARE THE SAME SIZE, THE LENS IS THE ONLY DIFFERENCE.</text>
+  <text x="40" y="234" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.62)">THE iPHONE PAYS FOR IT IN ISO, AND ISO IS NOISE.</text>
+</svg>
+<figcaption>Both ultra-wides use the same size sensor, so at a fixed shutter speed the only variable is the lens. The Pixel gathers 1.67× the light; the iPhone has to make that up with gain. That is the whole twenty-point gap, expressed as the number you would actually see in the EXIF.</figcaption>
+</figure>
+
+## Portraits: Not What You Expect
+
+**iPhone, on exactly the thing people assume the Pixel owns.** Bokeh scores 160 against 155, and DXOMARK's comparison crops label the Pixel with "slight segmentation inaccuracies on hair and shirt" against an accurately segmented iPhone. Skin tones go the same way.
+
+<aside class="engineering">
+**THE ENGINEERING** — Portrait mode is a depth-estimation problem, not an optical one, and cutting out hair is the hardest case: fine, low-contrast structure where the edge between subject and background is genuinely ambiguous in the pixels. Both phones carry a direct depth sensor — LiDAR on the iPhone, multi-zone laser AF on the Pixel — but the iPhone's is the higher-resolution of the two, and Apple documents using it for portraiture. My reading is that a denser measured depth map is what buys the cleaner edge; Apple does not publish how the two signals are weighted, so treat that as inference rather than established fact.
+</aside>
+
+<aside class="see-also">
+**See it yourself:** look at the hair edge in [DXOMARK's side-by-side crops](https://www.dxomark.com/google-pixel-9-pro-xl-camera-test/#photo-bokeh).
+</aside>
+
+Two things cut back the other way. The iPhone's shallower rendering can soften someone standing behind the rest of a group. And <mark>the Pixel still owns *repair*</mark>: Best Take rebuilds a group shot where someone blinked, Photo Unblur rescues a soft frame, and Apple answers neither. Object removal is no longer a Pixel exclusive though — Clean Up ships on the iPhone 16 Pro and does what Magic Eraser does.
+
+<figure>
+<svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two ways to find the edge of a subject. The iPhone adds a LiDAR scanner that measures distance directly, independent of image content. The Pixel infers depth from the image itself. Hair is the hard case for both because it is thin and low contrast.">
+  <rect width="700" height="290" rx="8" fill="#0E1117"/>
+  <text x="40" y="26" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5">TWO WAYS TO FIND THE EDGE OF A SUBJECT</text>
+
+  <rect x="40" y="44" width="300" height="196" rx="7" fill="rgba(91,140,255,0.06)" stroke="rgba(91,140,255,0.3)" stroke-width="1"/>
+  <text x="190" y="68" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="#5B8CFF" text-anchor="middle">iPHONE &#x2014; MEASURED</text>
+  <circle cx="140" cy="130" r="32" fill="rgba(255,255,255,0.13)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+  <path d="M112 106 L102 92 M124 97 L118 82 M140 92 L140 76 M156 97 L162 82 M168 106 L178 92" stroke="rgba(255,255,255,0.30)" stroke-width="1"/>
+  <path d="M104 200 Q104 168 140 168 Q176 168 176 200" fill="rgba(255,255,255,0.13)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+  <circle cx="224" cy="100" r="2.5" fill="#5B8CFF"/><circle cx="250" cy="100" r="2.5" fill="#5B8CFF"/><circle cx="276" cy="100" r="2.5" fill="#5B8CFF"/><circle cx="302" cy="100" r="2.5" fill="#5B8CFF"/>
+  <circle cx="224" cy="130" r="2.5" fill="#5B8CFF"/><circle cx="250" cy="130" r="2.5" fill="#5B8CFF"/><circle cx="276" cy="130" r="2.5" fill="#5B8CFF"/><circle cx="302" cy="130" r="2.5" fill="#5B8CFF"/>
+  <circle cx="224" cy="160" r="2.5" fill="#5B8CFF"/><circle cx="250" cy="160" r="2.5" fill="#5B8CFF"/><circle cx="276" cy="160" r="2.5" fill="#5B8CFF"/><circle cx="302" cy="160" r="2.5" fill="#5B8CFF"/>
+  <text x="263" y="186" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(91,140,255,0.85)" text-anchor="middle">LiDAR DEPTH GRID</text>
+  <text x="190" y="224" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.6)" text-anchor="middle">distance measured, not deduced</text>
+
+  <rect x="360" y="44" width="300" height="196" rx="7" fill="rgba(196,135,26,0.06)" stroke="rgba(196,135,26,0.3)" stroke-width="1"/>
+  <text x="510" y="68" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="#C4871A" text-anchor="middle">PIXEL &#x2014; INFERRED</text>
+  <circle cx="460" cy="130" r="32" fill="rgba(255,255,255,0.13)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+  <path d="M432 106 L422 92 M444 97 L438 82 M460 92 L460 76 M476 97 L482 82 M488 106 L498 92" stroke="rgba(255,255,255,0.30)" stroke-width="1"/>
+  <path d="M424 200 Q424 168 460 168 Q496 168 496 200" fill="rgba(255,255,255,0.13)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+  <path d="M548 96 Q568 112 548 128 Q528 144 548 160 Q568 176 548 192" fill="none" stroke="rgba(196,135,26,0.75)" stroke-width="1.5"/>
+  <path d="M580 96 Q600 112 580 128 Q560 144 580 160 Q600 176 580 192" fill="none" stroke="rgba(196,135,26,0.5)" stroke-width="1.5"/>
+  <path d="M612 96 Q632 112 612 128 Q592 144 612 160 Q632 176 612 192" fill="none" stroke="rgba(196,135,26,0.3)" stroke-width="1.5"/>
+  <text x="583" y="212" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(196,135,26,0.85)" text-anchor="middle">READ FROM THE PIXELS</text>
+  <text x="510" y="228" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.6)" text-anchor="middle">needs visible contrast at the edge</text>
+
+  <text x="40" y="264" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.62)">HAIR IS THE HARD CASE: THIN, LOW-CONTRAST, OFTEN THE SAME TONE AS THE BACKGROUND.</text>
+  <text x="40" y="280" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.45)">HOW APPLE WEIGHTS THE TWO SIGNALS IS UNDOCUMENTED &#x2014; THE LINK TO THE SCORES IS MY INFERENCE.</text>
+</svg>
+<figcaption>Both phones run a learned segmentation model; the difference is what it has to work with. The iPhone can consult a depth reading that exists whether or not the edge is visible in the image, while the Pixel must find the boundary in the pixels themselves. Note the last line — Apple does not publish how the two signals are combined, so this explains the measured gap rather than proving its cause.</figcaption>
+</figure>
+
+## Video: The Clearest Win
+
+**iPhone, 167 to 155.** ProRes in Apple Log up to 4K120, processed on the device in real time. The Pixel's Video Boost produces excellent 4K and even 8K — but by uploading to Google's servers, and until it finishes, minutes to hours later, <mark>the only usable file is a non-boosted 1080p</mark>.
+
+<aside class="engineering">
+**THE ENGINEERING** — Stills are a bursty workload: press the shutter and the pipeline can spend a good fraction of a second on one frame, then idle. Video is the opposite. At 4K60 the budget is **16.7ms per frame** — and at 4K120, 8.3ms — sustained indefinitely while the chip heats. That is why the tricks that win stills do not carry over: you cannot stack eight frames per output frame at 60fps inside a thermal envelope. Video Boost shipping frames to a datacentre reads to me as an acknowledgement of exactly that limit.
+</aside>
+
+One catch on the iPhone: <mark>4K120 ProRes requires an external USB-C SSD rated 440 MB/s or faster</mark>, and the 128 GB model caps internal ProRes at 1080p30. Budget for the drive.
+
+<figure>
+<svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Time to a usable file. The iPhone finishes processing on device as you record, so the final file is ready immediately. The Pixel gives a 1080p proxy immediately, then requires upload to Google Photos and cloud processing taking minutes to hours before the boosted 4K or 8K file exists.">
+  <rect width="700" height="260" rx="8" fill="#0E1117"/>
+  <text x="40" y="26" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5">TIME TO A FILE YOU CAN ACTUALLY HAND OVER</text>
+
+  <text x="40" y="76" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="#5B8CFF">iPHONE</text>
+  <rect x="130" y="60" width="120" height="28" rx="3" fill="rgba(91,140,255,0.55)"/>
+  <text x="190" y="78" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">RECORD</text>
+  <rect x="254" y="60" width="406" height="28" rx="3" fill="rgba(63,185,80,0.22)"/>
+  <text x="457" y="78" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="rgba(63,185,80,0.95)" text-anchor="middle">FINAL 4K PRORES &#x2014; READY THE MOMENT YOU STOP</text>
+
+  <text x="40" y="146" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="#C4871A">PIXEL</text>
+  <rect x="130" y="130" width="120" height="28" rx="3" fill="rgba(196,135,26,0.55)"/>
+  <text x="190" y="148" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">RECORD</text>
+  <rect x="254" y="130" width="96" height="28" rx="3" fill="rgba(255,255,255,0.13)"/>
+  <text x="302" y="148" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.8)" text-anchor="middle">1080p PROXY</text>
+  <rect x="354" y="130" width="96" height="28" rx="3" fill="rgba(255,255,255,0.08)"/>
+  <text x="402" y="148" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.65)" text-anchor="middle">UPLOAD</text>
+  <rect x="454" y="130" width="140" height="28" rx="3" fill="rgba(248,81,73,0.16)" stroke="rgba(248,81,73,0.5)" stroke-width="1" stroke-dasharray="5,4"/>
+  <text x="524" y="148" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(248,81,73,0.9)" text-anchor="middle">CLOUD PROCESS</text>
+  <rect x="598" y="130" width="62" height="28" rx="3" fill="rgba(196,135,26,0.5)"/>
+  <text x="629" y="148" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">FINAL</text>
+
+  <text x="524" y="176" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="rgba(248,81,73,0.85)" text-anchor="middle">MINUTES TO HOURS</text>
+
+  <line x1="40" y1="200" x2="660" y2="200" stroke="rgba(255,255,255,0.10)"/>
+  <text x="40" y="224" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.62)">UNTIL THE CLOUD FINISHES, THE ONLY PIXEL FILE THAT EXISTS IS 1080p.</text>
+  <text x="40" y="242" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.62)">FINE FOR SHARING LATER. NOT FINE IF SOMEONE IS WAITING FOR THE CLIP.</text>
+</svg>
+<figcaption>The format list is not what decides this. The iPhone's pipeline finishes as you shoot; the Pixel's best output does not exist until Google's servers have had it. Video Boost also requires the footage to be backed up to Google Photos, so it is a connectivity dependency as well as a time one.</figcaption>
+</figure>
+
+## Zoom: Both Phones Are Weak Where You Shoot
+
+Start with what most reviews get wrong: **neither phone has a 2× lens.** Both take 2× from the main sensor. Apple's spec sheet says so — "also enables 12MP 2x Telephoto: 48 mm, ƒ/1.78 aperture," the same lens as the main camera. <mark>Crop a 48MP sensor to 2× and you are left with exactly 12MP — which is exactly what Apple ships.</mark>
+
+The Pixel also works from the main sensor, but reconstructs rather than crops: Super Res Zoom fires a burst and uses the tremor in your hand to sample the scene at slightly different sub-pixel offsets, then aligns and merges the stack into an image holding more real detail than any single frame did. That is not marketing language — Google [published the algorithm](https://arxiv.org/abs/1905.03277) at SIGGRAPH, and it works precisely *because* your hands are not steady.
+
+<aside class="engineering">
+**THE ENGINEERING** — The 2×–5× range falls between two optical anchors, and neither phone has glass for it. Apple bridges the whole 1×–5× span by cropping further and further into the 48MP main sensor — the telephoto does not engage until 5×, so by 4× you are pushing a crop well past the point where there is detail left to take. Google leans on Super Res Zoom instead, reconstructing from a burst, and DXOMARK's report of "fusion artifacts at medium-range tele settings" suggests it is also blending camera feeds through part of that range. Different tactics, same underlying problem: there is no lens at 3×.
+</aside>
+
+**Past 5×, the Pixel wins, 145 to 133.**
+
+<aside class="engineering">
+**THE ENGINEERING** — Zoom beyond the lens is an information budget, not a processing question. At 10× you are using the central quarter of the frame. The iPhone's 12MP telephoto leaves 3MP of real data; the Pixel's 48MP leaves 12MP — **the same resolution the iPhone started with at 5×**. The Pixel's tele sensor is also 1.44× the area. Super-resolution can exploit sub-pixel sampling across frames; it cannot invent detail that was never measured.
+</aside>
+
+Keep it in proportion: telephoto is the weakest photo category on *both* phones.
+
+<figure>
+<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zoom range map on a logarithmic axis from 0.5x to 30x, showing which physical camera is active at each zoom level. Both phones use the ultra-wide below 1x, the main sensor from 1x to 5x, and the telephoto at 5x. Between 2x and 5x both are cropping or fusing with no matching optics. The iPhone tops out at 25x, the Pixel at 30x.">
+  <rect width="700" height="300" rx="8" fill="#0E1117"/>
+  <text x="40" y="26" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5">WHICH CAMERA IS ACTUALLY DOING THE WORK</text>
+
+  <rect x="280" y="46" width="125" height="200" fill="rgba(248,81,73,0.10)"/>
+  <text x="342" y="62" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="rgba(248,81,73,0.85)" text-anchor="middle">NO MATCHING OPTICS</text>
+
+  <line x1="185" y1="70" x2="185" y2="250" stroke="rgba(255,255,255,0.30)" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="405" y1="70" x2="405" y2="250" stroke="rgba(255,255,255,0.30)" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="185" y="84" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(255,255,255,0.55)" text-anchor="middle">OPTICAL</text>
+  <text x="405" y="84" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(255,255,255,0.55)" text-anchor="middle">OPTICAL</text>
+
+  <text x="40" y="118" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="#5B8CFF">iPHONE</text>
+  <rect x="90" y="100" width="95" height="26" rx="3" fill="rgba(255,255,255,0.14)"/>
+  <text x="137" y="117" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.8)" text-anchor="middle">ULTRA-WIDE</text>
+  <rect x="185" y="100" width="95" height="26" rx="3" fill="rgba(91,140,255,0.55)"/>
+  <text x="232" y="117" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">MAIN</text>
+  <rect x="280" y="100" width="125" height="26" rx="3" fill="rgba(91,140,255,0.22)"/>
+  <text x="342" y="117" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.75)" text-anchor="middle">CROP FROM MAIN</text>
+  <rect x="405" y="100" width="220" height="26" rx="3" fill="rgba(91,140,255,0.40)"/>
+  <text x="515" y="117" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.85)" text-anchor="middle">TELE &#x2192; DIGITAL, 12MP TO CROP</text>
+
+  <text x="40" y="176" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="#C4871A">PIXEL</text>
+  <rect x="90" y="158" width="95" height="26" rx="3" fill="rgba(255,255,255,0.14)"/>
+  <text x="137" y="175" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.8)" text-anchor="middle">ULTRA-WIDE</text>
+  <rect x="185" y="158" width="95" height="26" rx="3" fill="rgba(196,135,26,0.55)"/>
+  <text x="232" y="175" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="#0E1117" text-anchor="middle">MAIN</text>
+  <rect x="280" y="158" width="125" height="26" rx="3" fill="rgba(196,135,26,0.22)"/>
+  <text x="342" y="175" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.75)" text-anchor="middle">SUPER RES ZOOM</text>
+  <rect x="405" y="158" width="245" height="26" rx="3" fill="rgba(196,135,26,0.40)"/>
+  <text x="527" y="175" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.85)" text-anchor="middle">TELE &#x2192; SUPER RES, 48MP TO CROP</text>
+
+  <line x1="90" y1="212" x2="650" y2="212" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+  <text x="90" y="230" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="middle">0.5&#xD7;</text>
+  <text x="185" y="230" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(255,255,255,0.85)" text-anchor="middle">1&#xD7;</text>
+  <text x="280" y="230" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="middle">2&#xD7;</text>
+  <text x="335" y="230" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="middle">3&#xD7;</text>
+  <text x="405" y="230" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(255,255,255,0.85)" text-anchor="middle">5&#xD7;</text>
+  <text x="500" y="230" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="middle">10&#xD7;</text>
+  <text x="595" y="230" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="middle">20&#xD7;</text>
+  <text x="650" y="230" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="middle">30&#xD7;</text>
+
+  <line x1="625" y1="100" x2="625" y2="126" stroke="#5B8CFF" stroke-width="2"/>
+  <text x="625" y="96" font-family="'JetBrains Mono',monospace" font-size="8" font-weight="700" fill="#5B8CFF" text-anchor="middle">25&#xD7; MAX</text>
+  <line x1="650" y1="158" x2="650" y2="184" stroke="#C4871A" stroke-width="2"/>
+  <text x="648" y="154" font-family="'JetBrains Mono',monospace" font-size="8" font-weight="700" fill="#C4871A" text-anchor="middle">30&#xD7; MAX</text>
+
+  <text x="40" y="266" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.45)">TWO OPTICAL ANCHORS ONLY: 1&#xD7; AND 5&#xD7;. EVERYTHING BETWEEN THEM IS RECONSTRUCTED.</text>
+  <text x="40" y="284" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="rgba(248,81,73,0.75)">THE RED BAND IS 2&#xD7;&#x2013;3&#xD7; &#x2014; THE RANGE MOST PEOPLE SHOOT AT MOST OFTEN.</text>
+</svg>
+<figcaption>Zoom levels on a log axis, with the camera actually feeding each range. Both phones have only two optical anchors — 1× and 5×. Between them the iPhone simply crops deeper into the main sensor (its telephoto does not engage until 5×), while the Pixel reconstructs with Super Res Zoom. That red band is where the article's "both phones are weak" verdict comes from, and it is the range you probably use most.</figcaption>
+</figure>
+
+## Low Light, Consistency and RAW
+
+| | Winner | The engineering reason |
+|---|---|---|
+| **Night, static scenes** | Pixel | Noise here is photon shot noise, and signal-to-noise rises only with the square root of light collected — doubling it takes 4× the light. With aperture and sensor fixed, the only levers are exposure time and frame count. Google spends both harder. |
+| **Night, moving subjects** | Unresolved | The bill for those long exposures is paid in motion. That is a design-point choice, not a capability gap — so without a controlled test, I won't call it. |
+| **Shot-to-shot consistency** | iPhone | More adaptive decisions per frame means more variance between near-identical frames. Running semantic segmentation into local tone mapping gives a pipeline many degrees of freedom, so a small input change flips a decision. "Dynamic range instabilities across consecutive shots" is the signature of an aggressive per-frame optimiser; Apple trades peak quality for repeatability. |
+| **RAW and editing** | iPhone | Computational processing is normally destructive — crushed highlights do not come back. ProRAW is *more* processed than a plain DNG, not less, but a Profile Gain Table Map tag records the tone-mapping gain applied per region, so your editor can dial that layer back or switch it off. Not everything is reversible — the multi-frame merge and noise reduction are baked in — but the tone curve, the part that usually costs you the most latitude, is. |
+
+<figure>
+<svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Frame stacking has diminishing returns. Signal to noise rises with the square root of frames captured: 1 frame gives 1x, 4 frames 2x, 16 frames 4x. Exposure time and motion blur risk rise linearly, so each doubling of image quality costs four times the light and four times the motion risk.">
+  <rect width="700" height="320" rx="8" fill="#0E1117"/>
+  <text x="40" y="26" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5">WHY NIGHT MODE HAS A CEILING</text>
+
+  <text x="40" y="52" font-family="'JetBrains Mono',monospace" font-size="8" fill="rgba(255,255,255,0.38)" letter-spacing="1">SIGNAL-TO-NOISE GAIN</text>
+
+  <line x1="90" y1="250" x2="660" y2="250" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+
+  <rect x="110" y="207" width="70" height="43" rx="2" fill="rgba(196,135,26,0.35)"/>
+  <text x="145" y="199" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="rgba(255,255,255,0.85)" text-anchor="middle">1.0&#xD7;</text>
+  <text x="145" y="268" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.6)" text-anchor="middle">1 frame</text>
+
+  <rect x="230" y="190" width="70" height="60" rx="2" fill="rgba(196,135,26,0.45)"/>
+  <text x="265" y="182" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="rgba(255,255,255,0.85)" text-anchor="middle">1.4&#xD7;</text>
+  <text x="265" y="268" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.6)" text-anchor="middle">2 frames</text>
+
+  <rect x="350" y="165" width="70" height="85" rx="2" fill="rgba(196,135,26,0.55)"/>
+  <text x="385" y="157" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="rgba(255,255,255,0.85)" text-anchor="middle">2.0&#xD7;</text>
+  <text x="385" y="268" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.6)" text-anchor="middle">4 frames</text>
+
+  <rect x="470" y="130" width="70" height="120" rx="2" fill="rgba(196,135,26,0.68)"/>
+  <text x="505" y="122" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="rgba(255,255,255,0.85)" text-anchor="middle">2.8&#xD7;</text>
+  <text x="505" y="268" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.6)" text-anchor="middle">8 frames</text>
+
+  <rect x="590" y="80" width="70" height="170" rx="2" fill="rgba(196,135,26,0.82)"/>
+  <text x="625" y="72" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="rgba(255,255,255,0.85)" text-anchor="middle">4.0&#xD7;</text>
+  <text x="625" y="268" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.6)" text-anchor="middle">16 frames</text>
+
+  <path d="M145 246 L265 240 L385 228 L505 208 L625 172" fill="none" stroke="rgba(248,81,73,0.8)" stroke-width="2" stroke-dasharray="5,4"/>
+  <circle cx="145" cy="246" r="3.5" fill="rgba(248,81,73,0.9)"/>
+  <circle cx="265" cy="240" r="3.5" fill="rgba(248,81,73,0.9)"/>
+  <circle cx="385" cy="228" r="3.5" fill="rgba(248,81,73,0.9)"/>
+  <circle cx="505" cy="208" r="3.5" fill="rgba(248,81,73,0.9)"/>
+  <circle cx="625" cy="172" r="3.5" fill="rgba(248,81,73,0.9)"/>
+  <text x="648" y="160" font-family="'JetBrains Mono',monospace" font-size="8.5" font-weight="700" fill="rgba(248,81,73,0.9)" text-anchor="end">MOTION BLUR RISK</text>
+
+  <text x="40" y="292" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.62)">SNR RISES WITH THE SQUARE ROOT OF LIGHT: DOUBLING IT COSTS 4&#xD7; THE FRAMES.</text>
+  <text x="40" y="308" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.62)">EXPOSURE TIME RISES LINEARLY. THAT IS THE TRADE, AND NO PIPELINE ESCAPES IT.</text>
+</svg>
+<figcaption>Bars are the quality gain from stacking frames; the dashed line is what it costs you in exposure time, and therefore in motion blur. Because signal-to-noise only climbs with the square root of light collected, getting twice the quality means four times the frames — while the blur risk climbs the whole way. Google pushes further along this curve than Apple does. That is the entire low-light story, and the reason the moving-subject question has no clean winner.</figcaption>
+</figure>
+
+## Pick By What You Shoot
+
+<figure>
+<svg viewBox="0 0 860 316" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two-column buying guide. Buy the iPhone 16 Pro for video, portraits you will print or crop into, events and candids, and desktop RAW editing. Buy the Pixel 9 Pro for landscapes and interiors, night and low light, zoom beyond 5x, and repairing shots afterwards. Neither phone is good at 2x to 3x zoom.">
+  <rect width="860" height="316" rx="8" fill="#0E1117"/>
+  <text x="430" y="28" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="700" fill="rgba(255,255,255,0.5)" letter-spacing="1.5" text-anchor="middle">BUY FOR WHAT YOU ACTUALLY SHOOT</text>
+
+  <rect x="40" y="46" width="380" height="196" rx="7" fill="rgba(91,140,255,0.07)" stroke="rgba(91,140,255,0.35)" stroke-width="1"/>
+  <rect x="40" y="46" width="380" height="34" rx="7" fill="rgba(91,140,255,0.16)"/>
+  <text x="230" y="69" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700" fill="#5B8CFF" text-anchor="middle">iPHONE 16 PRO</text>
+  <text x="66" y="110" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(91,140,255,0.85)">&#x25B8;</text>
+  <text x="84" y="110" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.85)">Video of any kind</text>
+  <text x="66" y="141" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(91,140,255,0.85)">&#x25B8;</text>
+  <text x="84" y="141" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.85)">Portraits you&#x2019;ll print or crop into</text>
+  <text x="66" y="172" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(91,140,255,0.85)">&#x25B8;</text>
+  <text x="84" y="172" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.85)">Events and candids, no second take</text>
+  <text x="66" y="203" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(91,140,255,0.85)">&#x25B8;</text>
+  <text x="84" y="203" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.85)">Editing RAW on a desktop</text>
+  <text x="230" y="230" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.45)" text-anchor="middle">neutral, repeatable, built to be graded</text>
+
+  <rect x="440" y="46" width="380" height="196" rx="7" fill="rgba(196,135,26,0.07)" stroke="rgba(196,135,26,0.35)" stroke-width="1"/>
+  <rect x="440" y="46" width="380" height="34" rx="7" fill="rgba(196,135,26,0.16)"/>
+  <text x="630" y="69" font-family="'JetBrains Mono',monospace" font-size="12" font-weight="700" fill="#C4871A" text-anchor="middle">PIXEL 9 PRO</text>
+  <text x="466" y="110" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(196,135,26,0.9)">&#x25B8;</text>
+  <text x="484" y="110" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.85)">Landscapes, interiors, architecture</text>
+  <text x="466" y="141" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(196,135,26,0.9)">&#x25B8;</text>
+  <text x="484" y="141" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.85)">Night and low light</text>
+  <text x="466" y="172" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(196,135,26,0.9)">&#x25B8;</text>
+  <text x="484" y="172" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.85)">Zoom beyond 5&#xD7;</text>
+  <text x="466" y="203" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="rgba(196,135,26,0.9)">&#x25B8;</text>
+  <text x="484" y="203" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.85)">Rescuing shots after the fact</text>
+  <text x="630" y="230" font-family="'JetBrains Mono',monospace" font-size="9" fill="rgba(255,255,255,0.45)" text-anchor="middle">higher ceiling, more willing to intervene</text>
+
+  <rect x="40" y="258" width="780" height="42" rx="7" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" stroke-width="1" stroke-dasharray="5,4"/>
+  <text x="66" y="284" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="rgba(255,255,255,0.72)">NEITHER</text>
+  <text x="152" y="284" font-family="'JetBrains Mono',monospace" font-size="11" fill="rgba(255,255,255,0.62)">Zoom at 2&#xD7;&#x2013;3&#xD7; &#x2014; both measurably weak, and it is the range most people use</text>
+</svg>
+<figcaption>Overall scores are tied at 161 and 160, so there is no "better phone" here — only a better fit. Pick the column you live in.</figcaption>
+</figure>
+
+Read the hardware table again and most of this falls out of it. Same ultra-wide sensor size, different aperture. Same telephoto aperture, four times the pixels. The scores confirm the verdicts; the spec sheet largely predicts them.
+
+> These two phones built the same pipeline around different answers to one question: whose taste should the camera default to — yours, or the algorithm's?
+
+## Sources
+
+Specifications come from [Apple](https://support.apple.com/en-us/121031), [Google](https://store.google.com/product/pixel_9_pro_specs), Apple's [ProRes](https://support.apple.com/en-us/109041) and Google's [Video Boost](https://support.google.com/pixelcamera/answer/14257322) documentation, with sensor sizes from [GSMArena](https://www.gsmarena.com/apple_iphone_16_pro-13315.php).
+
+Scores are DXOMARK's, for the [Pixel 9 Pro XL](https://www.dxomark.com/google-pixel-9-pro-xl-camera-test/) and [iPhone 16 Pro Max](https://www.dxomark.com/apple-iphone-16-pro-max-camera-test/) — the larger variants, which carry identical cameras to the models here. These are their measurements, not mine, and DXOMARK revises them as its protocol changes, so 2024 coverage will quote different numbers.
+
+Super Res Zoom is described from Google's own SIGGRAPH 2019 paper, [Handheld Multi-Frame Super-Resolution](https://arxiv.org/abs/1905.03277) (Wronski et al.), which sets out the burst-and-merge algorithm in full. It documents the implementation that shipped on the Pixel 3; Google has not published the details of later revisions, so read it as the method rather than the current code.
+
+The remaining engineering notes are my own analysis, derived from published hardware specifications and first principles. Where a claim rests on inference rather than documentation — notably how Apple weights LiDAR against image-derived depth in portrait mode — I have said so at that point in the text rather than leaving it implied.
